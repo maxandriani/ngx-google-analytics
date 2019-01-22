@@ -12,34 +12,42 @@ export class GoogleAnalyticsService {
   ) { }
 
   event(action: GaActionEnum | string, category?: string, label?: string, value?: string) {
-    if (window['gtag']) {
-      const options = {};
-      if (category) {
-        options['category'] = category;
+    try {
+      if (window['gtag']) {
+        const options = {};
+        if (category) {
+          options['category'] = category;
+        }
+        if (label) {
+          options['label'] = label;
+        }
+        if (value) {
+          options['value'] = value;
+        }
+        window['gtag']('event', action, options);
       }
-      if (label) {
-        options['label'] = label;
-      }
-      if (value) {
-        options['value'] = value;
-      }
-      window['gtag']('event', action, options);
+    } catch (error) {
+      console.error(error);
     }
   }
 
-  pageView(title?: string, location?: string, path?: string) {
-    if (window['gtag']) {
-      const options = {};
-      if (title) {
-        options['title'] = title;
+  pageView(title ?: string, location ?: string, path ?: string) {
+    try {
+      if (window['gtag']) {
+        const options = {};
+        if (title) {
+          options['title'] = title;
+        }
+        if (location) {
+          options['location'] = location;
+        }
+        if (path) {
+          options['path'] = path;
+        }
+        window['gtag']('config', this.$trackingId, options);
       }
-      if (location) {
-        options['location'] = location;
-      }
-      if (path) {
-        options['path'] = path;
-      }
-      window['gtag']('config', this.$trackingId, options);
+    } catch (error) {
+      console.error(error);
     }
   }
 }

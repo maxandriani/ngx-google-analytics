@@ -31,18 +31,21 @@ export class GoogleAnalyticsService {
     }
   }
 
-  pageView( path ?: string, title ?: string, location ?: string) {
+  pageView( path ?: string, title ?: string, location ?: string, options?: Object) {
     try {
       if (window['gtag']) {
-        const options = {};
+        const opt = {};
         if (path) {
-          options['page_path'] = path;
+          opt['page_path'] = path;
         }
         if (title) {
-          options['page_title'] = title;
+          opt['page_title'] = title;
         }
         if (location) {
-          options['page_location'] = location;
+          opt['page_location'] = location;
+        }
+        if (options) {
+          Object.assign(opt, options);
         }
         window['gtag']('config', this.$trackingId.trackingCode, options);
       }

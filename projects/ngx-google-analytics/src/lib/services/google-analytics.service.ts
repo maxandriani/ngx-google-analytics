@@ -14,17 +14,17 @@ export class GoogleAnalyticsService {
   event(action: GaActionEnum | string, category?: string, label?: string, value?: string) {
     try {
       if (window['gtag']) {
-        const options = {};
+        const opt = {};
         if (category) {
-          options['category'] = category;
+          opt['category'] = category;
         }
         if (label) {
-          options['label'] = label;
+          opt['label'] = label;
         }
         if (value) {
-          options['value'] = value;
+          opt['value'] = value;
         }
-        window['gtag']('event', action, options);
+        window['gtag']('event', action, opt);
       }
     } catch (error) {
       console.error(error);
@@ -47,7 +47,50 @@ export class GoogleAnalyticsService {
         if (options) {
           Object.assign(opt, options);
         }
-        window['gtag']('config', this.$trackingId.trackingCode, options);
+        window['gtag']('config', this.$trackingId.trackingCode, opt);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  appView(screen: string, name: string, id?: string, version?: string, installer_id?: string) {
+    try {
+      if (window['gtag']) {
+        const opt = {};
+        if (screen) {
+          opt['screen_name'] = screen;
+        }
+        if (name) {
+          opt['app_name'] = name;
+        }
+        if (id) {
+          opt['app_id'] = id;
+        }
+        if (version) {
+          opt['app_version'] = version;
+        }
+        if (installer_id) {
+          opt['app_installer_id'] = installer_id;
+        }
+        window['gtag']('event', 'screen_view', opt);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  exception(description?: string, fatal?: boolean) {
+    try {
+      if (window['gtag']) {
+        const opt = {};
+        if (description) {
+          opt['description'] = description;
+        }
+        if (fatal) {
+          opt['fatal'] = fatal;
+        }
+        window['gtag']('event', 'exception', opt);
       }
     } catch (error) {
       console.error(error);

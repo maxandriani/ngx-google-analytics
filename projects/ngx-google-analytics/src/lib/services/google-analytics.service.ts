@@ -31,20 +31,20 @@ export class GoogleAnalyticsService {
     }
   }
 
-  pageView(title ?: string, location ?: string, path ?: string) {
+  pageView( path ?: string, title ?: string, location ?: string) {
     try {
       if (window['gtag']) {
         const options = {};
+        if (path) {
+          options['page_path'] = path;
+        }
         if (title) {
-          options['title'] = title;
+          options['page_title'] = title;
         }
         if (location) {
-          options['location'] = location;
+          options['page_location'] = location;
         }
-        if (path) {
-          options['path'] = path;
-        }
-        window['gtag']('config', this.$trackingId, options);
+        window['gtag']('config', this.$trackingId.trackingCode, options);
       }
     } catch (error) {
       console.error(error);

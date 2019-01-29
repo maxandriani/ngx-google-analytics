@@ -11,7 +11,42 @@ export class GoogleAnalyticsService {
     @Inject(NGX_GOOGLE_ANALYTICS_SETTINGS_TOKEN) protected $trackingId: IGoogleAnalyticsSettings
   ) { }
 
-  event(action: GaActionEnum | string, category?: string, label?: string, value?: string) {
+  protected throw(err: Error) {
+    if (console && console.error) {
+      console.error(err);
+    }
+  }
+
+  /**
+   * Call native GA Tag
+   *
+   * @param action config|event
+   * @param command Action specialization
+   * @param options Command configuration
+   */
+  gtag(action: string, command: string, ...options: Array<any>) {
+    try {
+      window['gtag'](action, command, ...options);
+    } catch (err) {
+      this.throw(err);
+    }
+  }
+
+  /**
+   * Send an event trigger to GA. It is the same as call:
+   * ```js
+   * gtag('event', 'video_auto_play_start', {
+   *   'event_label': 'My promotional video',
+   *   'event_category': 'video_auto_play'
+   * });
+   * ```
+   *
+   * @param action 'video_auto_play_start'
+   * @param category 'video_auto_play'
+   * @param label 'My promotional video'
+   * @param value An value to measure something
+   */
+  event(action: GaActionEnum | string, category?: string, label?: string, value?: number, interaction?: boolean) {
     try {
       if (window['gtag']) {
         const opt = {};
@@ -24,14 +59,34 @@ export class GoogleAnalyticsService {
         if (value) {
           opt['value'] = value;
         }
-        window['gtag']('event', action, opt);
+        if (interaction !== undefined) {
+          opt['interaction'] = interaction;
+        }
+        this.gtag('event', action as string, opt);
       }
     } catch (error) {
-      console.error(error);
+      this.throw(error);
     }
   }
 
-  pageView( path ?: string, title ?: string, location ?: string, options?: Object) {
+  /**
+   * Send an page view event. This is the same as
+   *
+   * ```js
+   * gtag('config', 'GA_TRACKING_ID', {
+   *   'page_title' : 'Homepage',
+   *   'page_path': '/home'
+   * });
+   * ```
+   *
+   * The tracking ID is injected automatically by Inject Token NGX_GOOGLE_ANALYTICS_SETTINGS_TOKEN
+   *
+   * @param path /home
+   * @param title Homepage
+   * @param location '{ page_location }'
+   * @param options '{ ... custom dimentions }'
+   */
+  pageView( path?: string, title?: string, location?: string, options?: Object) {
     try {
       if (window['gtag']) {
         const opt = {};
@@ -47,39 +102,69 @@ export class GoogleAnalyticsService {
         if (options) {
           Object.assign(opt, options);
         }
-        window['gtag']('config', this.$trackingId.trackingCode, opt);
+        this.gtag('config', this.$trackingId.trackingCode, opt);
       }
     } catch (error) {
-      console.error(error);
+      this.throw(error);
     }
   }
 
-  appView(screen: string, name: string, id?: string, version?: string, installer_id?: string) {
+  /**
+   * Send an evento to report a App Page View. It is the same as
+   *
+   * ```js
+   * gtag('event', 'screen_view', {
+   *   'app_name': 'myAppName',
+   *   'screen_name' : 'Home'
+   * });
+   *
+   * ```
+   *
+   * @param screen 'screen_name'
+   * @param name 'app_name'
+   * @param appId 'app_id'
+   * @param appVersion 'app_version'
+   * @param installerId 'app_installer_id'
+   */
+  appView(screen: string, appName: string, appId?: string, appVersion?: string, installerId?: string) {
     try {
       if (window['gtag']) {
         const opt = {};
         if (screen) {
           opt['screen_name'] = screen;
         }
-        if (name) {
-          opt['app_name'] = name;
+        if (appName) {
+          opt['app_name'] = appName;
         }
-        if (id) {
-          opt['app_id'] = id;
+        if (appId) {
+          opt['app_id'] = appId;
         }
-        if (version) {
-          opt['app_version'] = version;
+        if (appVersion) {
+          opt['app_version'] = appVersion;
         }
-        if (installer_id) {
-          opt['app_installer_id'] = installer_id;
+        if (installerId) {
+          opt['app_installer_id'] = installerId;
         }
-        window['gtag']('event', 'screen_view', opt);
+        this.gtag('event', 'screen_view', opt);
       }
     } catch (error) {
-      console.error(error);
+      this.throw(error);
     }
   }
 
+  /**
+   * Send an event to GA to report an application error. It is the same as
+   *
+   * ```js
+   * gtag('event', 'exception', {
+   *   'description': 'error_description',
+   *   'fatal': false   // set to true if the error is fatal
+   * });
+   * ```
+   *
+   * @param description 'error_description'
+   * @param fatal set to true if the error is fatal
+   */
   exception(description?: string, fatal?: boolean) {
     try {
       if (window['gtag']) {
@@ -90,10 +175,10 @@ export class GoogleAnalyticsService {
         if (fatal) {
           opt['fatal'] = fatal;
         }
-        window['gtag']('event', 'exception', opt);
+        this.gtag('event', 'exception', opt);
       }
     } catch (error) {
-      console.error(error);
+      this.throw(error);
     }
   }
 }

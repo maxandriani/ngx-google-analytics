@@ -8,4 +8,6 @@ export * from './lib/interfaces/i-google-analytics-settings';
 export * from './lib/tokens/ngx-google-analytics-settings-token';
 export * from './lib/enums/ga-action.enum';
 export * from './lib/services/google-analytics.service';
+export * from './lib/directives/ga-event-category.directive';
+export * from './lib/directives/ga-event.directive';
 export * from './lib/ngx-google-analytics.module';

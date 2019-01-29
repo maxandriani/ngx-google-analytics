@@ -126,7 +126,7 @@
       "root": "projects/ngx-google-analytics",
       "sourceRoot": "projects/ngx-google-analytics/src",
       "projectType": "library",
-      "prefix": "lib",
+      "prefix": "ga",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",

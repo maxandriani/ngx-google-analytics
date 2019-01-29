@@ -93,3 +93,33 @@ export class TestPageComponent implements OnInit {
 
 }
 ```
+
+## GA Directives
+
+You can use angular directives to call GA events.
+
+### Simple directive use
+
+```js
+<div>
+  <button gaEvent gaCategory="ga_directive_test" gaAction="click_test">Click Test</button>
+  <button gaEvent gaCategory="ga_directive_test" gaAction="focus_test" gaBind="focus">Focus Test</button>
+  <button gaEvent gaCategory="ga_directive_test" gaAction="blur_test" gaBind="blur">Blur Test</button>
+</div>
+```
+
+### Simple input use
+```js
+<div>
+  <input gaEvent gaCategory="ga_directive_input_test" gaAction="fill_blur" placeholder="Auto Blur Test">
+</div>
+```
+
+### Grouped directives
+```js
+<div gaCategory="ga_test_category">
+  <button gaEvent gaAction="click_test">Click Test</button>
+  <button gaEvent gaAction="focus_test" gaBind="focus">Focus Test</button>
+  <button gaEvent gaAction="blur_test" gaBind="blur">Blur Test</button>
+</div>
+```

@@ -1,8 +1,8 @@
-import { GaEventDirective } from './ga-event.directive';
+import { GaEventFormInputDirective } from './ga-event-form-input.directive';
 import { TestBed } from '@angular/core/testing';
 import { NgxGoogleAnalyticsModule } from '../ngx-google-analytics.module';
 
-describe('GaEventDirective', () => {
+describe('GaEventFormInputDirective', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -13,7 +13,7 @@ describe('GaEventDirective', () => {
   });
 
   it('should create an instance', () => {
-    const directive = TestBed.get(GaEventDirective);
+    const directive = TestBed.get(GaEventFormInputDirective);
     expect(directive).toBeTruthy();
   });
 });

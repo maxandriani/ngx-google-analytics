@@ -1,17 +1,18 @@
-import { Directive, Host, Optional, Input, HostListener, ElementRef, OnInit } from '@angular/core';
+import { Directive, Host, Optional, Input, HostListener, OnInit } from '@angular/core';
 import { GaEventCategoryDirective } from './ga-event-category.directive';
 import { GoogleAnalyticsService } from '../services/google-analytics.service';
 import { GaActionEnum } from '../enums/ga-action.enum';
+import { GaBind } from '../types/ga-bind.type';
 
 @Directive({
-  selector: '[gaEvent]'
+  selector: `[gaEvent]`,
+  exportAs: 'gaEvent'
 })
 export class GaEventDirective implements OnInit {
 
   constructor(
     @Host() @Optional() protected $gaCategoryDirective: GaEventCategoryDirective,
-    protected $gaService: GoogleAnalyticsService,
-    protected $el: ElementRef<HTMLInputElement>
+    protected $gaService: GoogleAnalyticsService
   ) {
   }
 
@@ -20,10 +21,9 @@ export class GaEventDirective implements OnInit {
   @Input() label: string;
   @Input() gaValue: number;
   @Input() gaInteraction: boolean;
-  @Input() gaBind: 'click'|'focus'|'blur' = 'click';
+  @Input() gaBind: GaBind = 'click';
 
   ngOnInit() {
-    this.suggestDefaultBinder();
   }
 
   @HostListener('click')
@@ -45,12 +45,6 @@ export class GaEventDirective implements OnInit {
     if (this.gaBind === 'blur') {
       this.trigger();
     }
-  }
-
-  protected suggestDefaultBinder() {
-    this.gaBind = (this.$el.nativeElement && this.$el.nativeElement.tagName === 'INPUT')
-                  ? 'blur'
-                  : 'click';
   }
 
   protected trigger() {

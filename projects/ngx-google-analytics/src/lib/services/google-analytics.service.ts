@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
-import { GaActionEnum } from '../enums/ga-action.enum';
 import { NGX_GOOGLE_ANALYTICS_SETTINGS_TOKEN } from '../tokens/ngx-google-analytics-settings-token';
 import { IGoogleAnalyticsSettings } from '../interfaces/i-google-analytics-settings';
+import { GaAction } from '../types/ga-action.type';
 @Injectable({
   providedIn: 'root'
 })
@@ -46,7 +46,7 @@ export class GoogleAnalyticsService {
    * @param label 'My promotional video'
    * @param value An value to measure something
    */
-  event(action: GaActionEnum | string, category?: string, label?: string, value?: number, interaction?: boolean) {
+  event(action: GaAction | string, category?: string, label?: string, value?: number, interaction?: boolean) {
     try {
       if (window['gtag']) {
         const opt = {};

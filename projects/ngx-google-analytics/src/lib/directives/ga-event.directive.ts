@@ -1,8 +1,8 @@
 import { Directive, Host, Optional, Input, HostListener, OnInit } from '@angular/core';
 import { GaEventCategoryDirective } from './ga-event-category.directive';
 import { GoogleAnalyticsService } from '../services/google-analytics.service';
-import { GaActionEnum } from '../enums/ga-action.enum';
 import { GaBind } from '../types/ga-bind.type';
+import { GaAction } from '../types/ga-action.type';
 
 @Directive({
   selector: `[gaEvent]`,
@@ -16,7 +16,7 @@ export class GaEventDirective implements OnInit {
   ) {
   }
 
-  @Input() gaAction: GaActionEnum | string;
+  @Input() gaAction: GaAction | string;
   @Input() gaLabel: string;
   @Input() label: string;
   @Input() gaValue: number;

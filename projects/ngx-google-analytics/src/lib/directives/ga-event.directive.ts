@@ -1,4 +1,4 @@
-import { Directive, Host, Optional, Input, HostListener, OnInit } from '@angular/core';
+import { Directive, Optional, Input, HostListener, OnInit } from '@angular/core';
 import { GaEventCategoryDirective } from './ga-event-category.directive';
 import { GoogleAnalyticsService } from '../services/google-analytics.service';
 import { GaBind } from '../types/ga-bind.type';
@@ -11,7 +11,7 @@ import { GaAction } from '../types/ga-action.type';
 export class GaEventDirective implements OnInit {
 
   constructor(
-    @Host() @Optional() protected $gaCategoryDirective: GaEventCategoryDirective,
+    @Optional() protected $gaCategoryDirective: GaEventCategoryDirective,
     protected $gaService: GoogleAnalyticsService
   ) {
   }

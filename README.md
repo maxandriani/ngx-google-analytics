@@ -3,8 +3,6 @@
 An easy implementation to track ga on angular6+ apps.
 
 **@TODO:** 
-* Create service wrapper to ga commands;
-* Create an Ng Router Helper;
 * Create unit tests;
 
 ## Install
@@ -122,4 +120,23 @@ You can use angular directives to call GA events.
   <button gaEvent gaAction="focus_test" gaBind="focus">Focus Test</button>
   <button gaEvent gaAction="blur_test" gaBind="blur">Blur Test</button>
 </div>
+```
+
+## Tracking Angular Router
+
+Add ```NgxGoogleAnalyticsRouterModule``` on AppModule to auto track Angular's Router class and trigger a page view after nagivation.
+
+```ts
+import { NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule } from 'ngx-google-analytics';
+...
+
+@NgModule({
+  ...
+  imports: [
+    ...
+    NgxGoogleAnalyticsModule.forRoot(environment.ga),
+    NgxGoogleAnalyticsRouterModule
+  ]
+})
+export class AppModule {}
 ```

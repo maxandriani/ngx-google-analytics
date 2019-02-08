@@ -51,10 +51,10 @@ export class GoogleAnalyticsService {
       if (window['gtag']) {
         const opt = {};
         if (category) {
-          opt['category'] = category;
+          opt['event_category'] = category;
         }
         if (label) {
-          opt['label'] = label;
+          opt['event_label'] = label;
         }
         if (value) {
           opt['value'] = value;

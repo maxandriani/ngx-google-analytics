@@ -22,7 +22,7 @@ export function GoogleAnalyticsRouterInitializer(
       .events
       .subscribe(event => {
         if (event instanceof NavigationEnd) {
-          $gaService.pageView(event.urlAfterRedirects);
+          $gaService.pageView(event.urlAfterRedirects, undefined, document.location.href);
         }
       });
   };

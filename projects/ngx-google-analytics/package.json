@@ -1,6 +1,6 @@
 {
   "name": "ngx-google-analytics",
-  "version": "0.0.8",
+  "version": "8.0.0",
   "description": "A simple ng-6 wrapper to load Google Analytics dependency by angular way",
   "keywords": [ "google", "google analytics", "angular", "angular-6+", "typescript" ],
   "homepage": "https://github.com/maxandriani/ngx-google-analytics",
@@ -10,7 +10,7 @@
     "url": "https://github.com/maxandriani/ngx-google-analytics"
   },
   "peerDependencies": {
-    "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
-    "@angular/core": "^6.0.0-rc.0 || ^6.0.0"
+    "@angular/common": "^8.0.2",
+    "@angular/core": "^8.0.2"
   }
 }

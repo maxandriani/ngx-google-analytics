@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  ga: 'tracking-code'
+  ga: 'UA-17886362-3'
 };
 
 /*

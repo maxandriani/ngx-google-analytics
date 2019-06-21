@@ -1,7 +1,6 @@
-import { Provider, APP_BOOTSTRAP_LISTENER } from '@angular/core';
+import { Provider, APP_BOOTSTRAP_LISTENER, ComponentRef } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { GoogleAnalyticsService } from '../services/google-analytics.service';
-import { ComponentRef } from '@angular/core/src/render3';
 
 export const NGX_GOOGLE_ANALYTICS_ROUTER_INITIALIZER_PROVIDER: Provider = {
   provide: APP_BOOTSTRAP_LISTENER,

@@ -2,6 +2,8 @@
 
 An easy implementation to track ga on angular6+ apps.
 
+![Build and run Tests](https://github.com/maxandriani/ngx-google-analytics/workflows/Build%20and%20run%20Tests/badge.svg?branch=master)
+
 **@TODO:** 
 * Create unit tests;
 

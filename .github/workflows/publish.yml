@@ -6,6 +6,7 @@ name: Bump and Publish
 on:
   release
     # types: [released]
+    # refs/tags/x.x.x
 
 jobs:
   tests:
@@ -29,6 +30,9 @@ jobs:
     needs: tests
     runs-on: ubuntu-latest
     steps:
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
@@ -42,16 +46,16 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
       - run: npm ci --ignore-scripts
-      - run: npm --no-git-tag-version version ${{github.ref}}
-      - run: npm --no-git-tag-version version ${{github.ref}}
+      - run: npm --no-git-tag-version version ${{ steps.get_version.outputs.VERSION }}
+      - run: npm --no-git-tag-version version ${{ steps.get_version.outputs.VERSION }}
         working-directory: dist/ngx-google-analytics
-      - name: 'Commit Bump to ${{github.ref}}'
+      - name: 'Commit Bump to ${{ steps.get_version.outputs.VERSION }}'
         run: |
           echo git config --local user.email "action@github.com"
           echo git config --local user.name "GitHub Action"
           git add **/package.json
           git status
-          git commit -m "Bump to ${{github.ref}} [skip ci]"
+          git commit -m "Bump to ${{ steps.get_version.outputs.VERSION }} [skip ci]"
           echo git push
       - run: npm run build
       - run: |
@@ -59,7 +63,7 @@ jobs:
           cp README.md dist\ngx-google-analytics
           cp CHANGELOG.md dist\ngx-google-analytics
       - run: npm pack dist/ngx-google-analytics
-      - name: 'Upload Build Artifatc ${{github.ref}}'
+      - name: 'Upload Build Artifatc ${{ steps.get_version.outputs.VERSION }}'
         uses: actions/upload-artifact@v2
         with:
           name: ${{github.ref}}
@@ -72,10 +76,10 @@ jobs:
       - name: Download a Build Artifact
         uses: actions/download-artifact@v2
         with:
-          name: ${{github.ref}}
+          name: ${{ steps.get_version.outputs.VERSION }}
       - uses: actions/setup-node@v1
         with:
           node-version: 10
-      - run: npm publish --dry-run --tag ${{github.ref}} ngx-google-analytics*.tgz
+      - run: npm publish --dry-run --tag ${{ steps.get_version.outputs.VERSION }} ngx-google-analytics*.tgz
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

@@ -75,6 +75,9 @@ jobs:
     needs: bump-and-build
     runs-on: ubuntu-latest
     steps:
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
       - name: Download a Build Artifact
         uses: actions/download-artifact@v2
         with:

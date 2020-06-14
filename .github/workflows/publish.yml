@@ -55,9 +55,9 @@ jobs:
           echo git push
       - run: npm run build
       - run: |
-        cp LICENSE dist\ngx-google-analytics
-        cp README.md dist\ngx-google-analytics
-        cp CHANGELOG.md dist\ngx-google-analytics
+          cp LICENSE dist\ngx-google-analytics
+          cp README.md dist\ngx-google-analytics
+          cp CHANGELOG.md dist\ngx-google-analytics
       - run: npm pack dist/ngx-google-analytics
       - name: 'Upload Build Artifatc ${GITHUB_REF}'
         uses: actions/upload-artifact@v2

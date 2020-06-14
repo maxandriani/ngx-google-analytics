@@ -48,7 +48,7 @@ jobs:
       - run: npm ci --ignore-scripts
       - run: npm --no-git-tag-version version ${{ steps.get_version.outputs.VERSION }}
       - run: npm --no-git-tag-version version ${{ steps.get_version.outputs.VERSION }}
-        working-directory: dist/ngx-google-analytics
+        working-directory: projects/ngx-google-analytics
       - name: 'Commit Bump to ${{ steps.get_version.outputs.VERSION }}'
         run: |
           echo git config --local user.email "action@github.com"

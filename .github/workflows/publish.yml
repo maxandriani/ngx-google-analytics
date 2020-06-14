@@ -49,25 +49,27 @@ jobs:
       - run: npm --no-git-tag-version version ${{ steps.get_version.outputs.VERSION }}
       - run: npm --no-git-tag-version version ${{ steps.get_version.outputs.VERSION }}
         working-directory: projects/ngx-google-analytics
-      - name: 'Commit Bump to ${{ steps.get_version.outputs.VERSION }}'
-        run: |
-          echo git config --local user.email "action@github.com"
-          echo git config --local user.name "GitHub Action"
-          git add **/package.json
-          git status
-          git commit -m "Bump to ${{ steps.get_version.outputs.VERSION }} [skip ci]"
-          echo git push
+      # - name: 'Commit Bump to ${{ steps.get_version.outputs.VERSION }}'
+      #   run: |
+      #     echo git config --local user.email "action@github.com"
+      #     echo git config --local user.name "GitHub Action"
+      #     git add package.json
+      #     git add projects/ngx-google-analytics/package.json
+      #     git status
+      #     git commit -m "Bump to ${{ steps.get_version.outputs.VERSION }} [skip ci]"
+      #     echo git push
       - run: npm run build
       - run: |
           cp LICENSE dist\ngx-google-analytics
           cp README.md dist\ngx-google-analytics
           cp CHANGELOG.md dist\ngx-google-analytics
-      - run: npm pack dist/ngx-google-analytics
+      - run: npm pack
+        working-directory: dist/ngx-google-analytics
       - name: 'Upload Build Artifatc ${{ steps.get_version.outputs.VERSION }}'
         uses: actions/upload-artifact@v2
         with:
           name: ${{github.ref}}
-          path: ngx-google-analytics*.tgz
+          path: dist/ngx-google-analytics/ngx-google-analytics*.tgz
 
   publish-npm:
     needs: bump-and-build

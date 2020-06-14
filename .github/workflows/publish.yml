@@ -1,0 +1,77 @@
+# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
+# For more information see: https://help.github.com/actions/language-and-framework-guides/publishing-nodejs-packages
+
+name: Bump and Publish a Version
+
+on:
+  release
+    # types: [released]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 10
+      - name: 'Cache node Modules'
+        uses: actions/cache@v1
+        with:
+          path: ~.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - run: npm ci --ignore-scripts
+      - run: npm test
+
+  bump-and-build:
+    needs: tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 10
+          registry-url: https://registry.npmjs.org/
+      - name: 'Cache node Modules'
+        uses: actions/cache@v1
+        with:
+          path: ~.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - run: npm ci --ignore-scripts
+      - run: npm --no-git-tag-version version ${{ GITHUB_REF }}
+      - run: npm --no-git-tag-version version ${{ GITHUB_REF }}
+        working-directory: dist/ngx-google-analytics
+      - name: 'Commit Bump to ${{ GITHUB_REF }}'
+        run: |
+          echo git config --local user.email "action@github.com"
+          echo git config --local user.name "GitHub Action"
+          git add **/package.json
+          git status
+          git commit -m "Bump to ${{ GITHUB_REF }} [skip ci]"
+          echo git push
+      - run: npm run build
+      - run: npm pack dist/ngx-google-analytics
+      - name: 'Upload Build Artifatc ${{ GITHUB_REF }}'
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ GITHUB_REF }}
+          path: ngx-google-analytics*.tgz
+
+  publish-npm:
+    needs: bump-and-build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download a Build Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: ${{ GITHUB_REF }}
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 10
+      - run: npm publish --dry-run --tag ${{ GITHUB_REF }} ngx-google-analytics*.tgz
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

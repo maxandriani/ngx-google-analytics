@@ -1,3 +1,8 @@
+/**
+ * A string that represents a default GA action used by Google to generate e-commerce inteligence.
+ *
+ * You can provide a custom string as well.
+ */
 export type GaAction = 'view_search_results'
                         | 'add_payment_info'
                         | 'add_to_cart'

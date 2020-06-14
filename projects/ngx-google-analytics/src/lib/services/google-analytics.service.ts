@@ -1,20 +1,39 @@
-import { Injectable, Inject } from '@angular/core';
+import { Injectable, Inject, isDevMode } from '@angular/core';
 import { NGX_GOOGLE_ANALYTICS_SETTINGS_TOKEN } from '../tokens/ngx-google-analytics-settings-token';
 import { IGoogleAnalyticsSettings } from '../interfaces/i-google-analytics-settings';
 import { GaAction } from '../types/ga-action.type';
+import { DOCUMENT } from '@angular/common';
+import { NGX_GTAG_FN } from '../tokens/ngx-gtag-token';
+import { GtagFn } from '../types/gtag.type';
 @Injectable({
   providedIn: 'root'
 })
 export class GoogleAnalyticsService {
 
+  private get document(): Document {
+    return this._document;
+  }
+
   constructor(
-    @Inject(NGX_GOOGLE_ANALYTICS_SETTINGS_TOKEN) protected $trackingId: IGoogleAnalyticsSettings
+    @Inject(NGX_GOOGLE_ANALYTICS_SETTINGS_TOKEN) private readonly settings: IGoogleAnalyticsSettings,
+    @Inject(DOCUMENT) private readonly _document: any,
+    @Inject(NGX_GTAG_FN) private readonly _gtag: GtagFn
   ) { }
 
-  protected throw(err: Error) {
-    if (console && console.error) {
+  private throw(err: Error) {
+    if ((this.settings.ennableTracing || isDevMode()) && console && console.error) {
       console.error(err);
     }
+  }
+
+  /** @todo Change this to `Object.fromEntity()` in the future... */
+  private toKeyValue(map: Map<string, any>): { [param: string]: any } | void {
+    return (map.size > 0)
+      ? Array.from(map).reduce(
+        (obj, [key, value]) => Object.defineProperty(obj, key, { value, enumerable: true }),
+        {}
+      )
+      : undefined;
   }
 
   /**
@@ -26,7 +45,7 @@ export class GoogleAnalyticsService {
    */
   gtag(action: string, command: string, ...options: Array<any>) {
     try {
-      window['gtag'](action, command, ...options);
+      this._gtag(action, command, ...options);
     } catch (err) {
       this.throw(err);
     }
@@ -48,21 +67,24 @@ export class GoogleAnalyticsService {
    */
   event(action: GaAction | string, category?: string, label?: string, value?: number, interaction?: boolean) {
     try {
-      if (window['gtag']) {
-        const opt = {};
-        if (category) {
-          opt['event_category'] = category;
-        }
-        if (label) {
-          opt['event_label'] = label;
-        }
-        if (value) {
-          opt['value'] = value;
-        }
-        if (interaction !== undefined) {
-          opt['interaction'] = interaction;
-        }
-        this.gtag('event', action as string, opt);
+      const opt = new Map<string, any>();
+      if (category) {
+        opt.set('event_category', category);
+      }
+      if (label) {
+        opt.set('event_label', label);
+      }
+      if (value) {
+        opt.set('value', value);
+      }
+      if (interaction !== undefined) {
+        opt.set('interaction', interaction);
+      }
+      const params = this.toKeyValue(opt);
+      if (params) {
+        this.gtag('event', action as string, params);
+      } else {
+        this.gtag('event', action as string);
       }
     } catch (error) {
       this.throw(error);
@@ -86,31 +108,28 @@ export class GoogleAnalyticsService {
    * @param location '{ page_location }'
    * @param options '{ ... custom dimentions }'
    */
-  pageView( path?: string, title?: string, location?: string, options?: Object) {
+  pageView( path: string, title?: string, location?: string, options?: Object) {
     try {
-      if (window['gtag']) {
-        const opt = {};
-        if (path) {
-          opt['page_path'] = path;
-        }
-        if (title) {
-          opt['page_title'] = title;
-        }
-        if (location) {
-          opt['page_location'] = location;
-        }
-        if (options) {
-          Object.assign(opt, options);
-        }
-        this.gtag('config', this.$trackingId.trackingCode, opt);
+      const opt = new Map<string, any>([['page_path', path]]);
+      if (title) {
+        opt.set('page_title', title);
       }
+      if (location || this.document) {
+        opt.set('page_location', (location || this.document.location.href));
+      }
+      if (options) {
+        Object
+          .entries(options)
+          .map(([key, value]) => opt.set(key, value));
+      }
+      this.gtag('config', this.settings.trackingCode, this.toKeyValue(opt));
     } catch (error) {
       this.throw(error);
     }
   }
 
   /**
-   * Send an evento to report a App Page View. It is the same as
+   * Send an event to report a App Page View. It is the same as
    *
    * ```js
    * gtag('event', 'screen_view', {
@@ -128,25 +147,17 @@ export class GoogleAnalyticsService {
    */
   appView(screen: string, appName: string, appId?: string, appVersion?: string, installerId?: string) {
     try {
-      if (window['gtag']) {
-        const opt = {};
-        if (screen) {
-          opt['screen_name'] = screen;
-        }
-        if (appName) {
-          opt['app_name'] = appName;
-        }
-        if (appId) {
-          opt['app_id'] = appId;
-        }
-        if (appVersion) {
-          opt['app_version'] = appVersion;
-        }
-        if (installerId) {
-          opt['app_installer_id'] = installerId;
-        }
-        this.gtag('event', 'screen_view', opt);
+      const opt = new Map<string, any>([['screen_name', screen], ['app_name', appName]]);
+      if (appId) {
+        opt.set('app_id', appId);
       }
+      if (appVersion) {
+        opt.set('app_version', appVersion);
+      }
+      if (installerId) {
+        opt.set('app_installer_id', installerId);
+      }
+      this.gtag('event', 'screen_view', this.toKeyValue(opt));
     } catch (error) {
       this.throw(error);
     }
@@ -167,15 +178,18 @@ export class GoogleAnalyticsService {
    */
   exception(description?: string, fatal?: boolean) {
     try {
-      if (window['gtag']) {
-        const opt = {};
-        if (description) {
-          opt['description'] = description;
-        }
-        if (fatal) {
-          opt['fatal'] = fatal;
-        }
-        this.gtag('event', 'exception', opt);
+      const opt = new Map<string, any>();
+      if (description) {
+        opt.set('description', description);
+      }
+      if (fatal) {
+        opt.set('fatal', fatal);
+      }
+      const params = this.toKeyValue(opt);
+      if (params) {
+        this.gtag('event', 'exception', this.toKeyValue(opt));
+      } else {
+        this.gtag('event', 'exception');
       }
     } catch (error) {
       this.throw(error);

@@ -1,4 +1,7 @@
+/**
+ * Standarizes a common comand protocol :)
+ */
 export interface IGoogleAnalyticsCommand {
   command: string;
-  values: any[];
+  values: Array<any>;
 }

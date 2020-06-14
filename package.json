@@ -3,16 +3,13 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+    "prestart": "npm run build",
     "start": "ng serve",
-    "build": "ng build",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e",
-    "build-pkg": "ng build ngx-google-analytics",
-    "cp": "cp \".\\README.md\" \".\\dist\\ngx-google-analytics\\README.md\"",
-    "cp:win": "copy \".\\README.md\" \".\\dist\\ngx-google-analytics\\README.md\"",
-    "publish": "npm run build-pkg && npm run cp && npm publish dist\\ngx-google-analytics",
-    "publish:win": "npm run build-pkg && npm run cp:win && npm publish dist\\ngx-google-analytics"
+    "build": "ng build ngx-google-analytics",
+    "test": "ng test ngx-google-analytics --browsers=ChromeHeadless --watch=false",
+    "test:dev": "ng test ngx-google-analytics",
+    "lint": "ng lint ngx-google-analytics",
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {

@@ -42,16 +42,16 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
       - run: npm ci --ignore-scripts
-      - run: npm --no-git-tag-version version ${{ GITHUB_REF }}
-      - run: npm --no-git-tag-version version ${{ GITHUB_REF }}
+      - run: npm --no-git-tag-version version ${GITHUB_REF}
+      - run: npm --no-git-tag-version version ${GITHUB_REF}
         working-directory: dist/ngx-google-analytics
-      - name: 'Commit Bump to ${{ GITHUB_REF }}'
+      - name: 'Commit Bump to ${GITHUB_REF}'
         run: |
           echo git config --local user.email "action@github.com"
           echo git config --local user.name "GitHub Action"
           git add **/package.json
           git status
-          git commit -m "Bump to ${{ GITHUB_REF }} [skip ci]"
+          git commit -m "Bump to ${GITHUB_REF} [skip ci]"
           echo git push
       - run: npm run build
       - run: |
@@ -59,10 +59,10 @@ jobs:
         cp README.md dist\ngx-google-analytics
         cp CHANGELOG.md dist\ngx-google-analytics
       - run: npm pack dist/ngx-google-analytics
-      - name: 'Upload Build Artifatc ${{ GITHUB_REF }}'
+      - name: 'Upload Build Artifatc ${GITHUB_REF}'
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ GITHUB_REF }}
+          name: ${GITHUB_REF}
           path: ngx-google-analytics*.tgz
 
   publish-npm:
@@ -72,10 +72,10 @@ jobs:
       - name: Download a Build Artifact
         uses: actions/download-artifact@v2
         with:
-          name: ${{ GITHUB_REF }}
+          name: ${GITHUB_REF}
       - uses: actions/setup-node@v1
         with:
           node-version: 10
-      - run: npm publish --dry-run --tag ${{ GITHUB_REF }} ngx-google-analytics*.tgz
+      - run: npm publish --dry-run --tag ${GITHUB_REF} ngx-google-analytics*.tgz
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

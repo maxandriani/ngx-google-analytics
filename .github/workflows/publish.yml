@@ -68,8 +68,8 @@ jobs:
       - name: 'Upload Build Artifatc ${{ steps.get_version.outputs.VERSION }}'
         uses: actions/upload-artifact@v2
         with:
-          name: ${{github.ref}}
-          path: dist/ngx-google-analytics/ngx-google-analytics*.tgz
+          name: ${{ steps.get_version.outputs.VERSION }}.tgz
+          path: dist/ngx-google-analytics/ngx-google-analytics-${{ steps.get_version.outputs.VERSION }}.tgz
 
   publish-npm:
     needs: bump-and-build
@@ -78,10 +78,10 @@ jobs:
       - name: Download a Build Artifact
         uses: actions/download-artifact@v2
         with:
-          name: ${{ steps.get_version.outputs.VERSION }}
+          name: ${{ steps.get_version.outputs.VERSION }}.tgz
       - uses: actions/setup-node@v1
         with:
           node-version: 10
-      - run: npm publish --dry-run --tag ${{ steps.get_version.outputs.VERSION }} ngx-google-analytics*.tgz
+      - run: npm publish --dry-run --tag ${{ steps.get_version.outputs.VERSION }} ngx-google-analytics-${{ steps.get_version.outputs.VERSION }}.tgz
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

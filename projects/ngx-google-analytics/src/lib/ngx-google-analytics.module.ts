@@ -35,7 +35,7 @@ export class NgxGoogleAnalyticsModule {
    * @param commands When placed, it will run any GA Commangs in sequence after setup GA environment.
    * @param uri When placed, it will change the default js URI to the provided one.
    */
-  static forRoot(trackingCode: string, commands: IGoogleAnalyticsCommand[] = [], uri?: string, enableTracing?: boolean): ModuleWithProviders {
+  static forRoot(trackingCode: string, commands: IGoogleAnalyticsCommand[] = [], uri?: string, enableTracing?: boolean): ModuleWithProviders<NgxGoogleAnalyticsModule> {
     return {
       ngModule: NgxGoogleAnalyticsModule,
       providers: [

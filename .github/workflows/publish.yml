@@ -85,6 +85,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 10
+          registry-url: https://registry.npmjs.org/
       - run: npm publish ngx-google-analytics-${{ steps.get_version.outputs.VERSION }}.tgz
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

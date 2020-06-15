@@ -13,6 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "dist/ngx-google-analytics-sdk",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -29,6 +30,12 @@
           },
           "configurations": {
             "production": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -133,6 +140,11 @@
           "options": {
             "tsConfig": "projects/ngx-google-analytics/tsconfig.lib.json",
             "project": "projects/ngx-google-analytics/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ngx-google-analytics/tsconfig.lib.prod.json"
+            }
           }
         },
         "test": {
@@ -158,5 +170,8 @@
       }
     }
   },
-  "defaultProject": "ngx-google-analytics-sdk"
+  "defaultProject": "ngx-google-analytics-sdk",
+  "cli": {
+    "analytics": "3ce39043-c695-45ae-9eeb-07fed5fb3a2e"
+  }
 }

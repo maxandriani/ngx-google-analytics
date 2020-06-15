@@ -1,23 +1,33 @@
 # Ngx Google Analytics
 
-An easy implementation to track ga on angular6+ apps.
+An easy implementation to track ga on angular8+ apps.
 
-![Build and run Tests](https://github.com/maxandriani/ngx-google-analytics/workflows/Build%20and%20run%20Tests/badge.svg?branch=master)
+Feedbacks on https://github.com/maxandriani/ngx-google-analytics
 
-**@TODO:** 
-* Create unit tests;
+![Build and Tests](https://github.com/maxandriani/ngx-google-analytics/workflows/Build%20and%20Tests/badge.svg)
 
-## Install
+
+* [Setup](#setup)
+  * [NPM](#npm)
+  * [Simple Setup](#simple-setup)
+  * [Routing Setup](#routing-setup)
+* [GoogleAnalyticsServie](#googleanalyticsservice)
+* [Directives](#directives)
+* [Changelog](CHANGELOG.md)
+
+## Setup
+
+### NPM
+
+To setup this package on you project, just call the following command.
 
 ```
 npm install ngx-google-analytics
 ```
 
-## Feedbacks
+### Simple Setup
 
-https://github.com/maxandriani/ngx-google-analytics
-
-## Simple Configuration
+On your Angular Project, you shall include the `NgxGoogleAnalyticsModule` on you highest level application module. ie `AddModule`. The easest install mode call the `forRoot()` method and pass the GA tracking code.
 
 ```ts
 import { NgxGoogleAnalyticsModule } from 'ngx-google-analytics';
@@ -29,6 +39,7 @@ import { NgxGoogleAnalyticsModule } from 'ngx-google-analytics';
   imports: [
     BrowserModule,
     NgxGoogleAnalyticsModule.forRoot('traking-code')
+  // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   ],
   providers: [],
   bootstrap: [AppComponent]
@@ -36,17 +47,45 @@ import { NgxGoogleAnalyticsModule } from 'ngx-google-analytics';
 export class AppModule { }
 ```
 
-## Call GA Events
+### Setup Routing Module
+
+We provide a second Module Dependency to configure Router Event Bindings and performa automatic page view every time you application navigate to another page.
+
+Add ```NgxGoogleAnalyticsRouterModule``` on AppModule enable auto track `Router` events.
+
+**IMPORTANT:** This Module just subscribe to Router events when the bootstrap component is created, and than cleanup any subscriptions related to previous compenente when it is destroyed. Maybe you may get some issues if using this module on a server side rendering or multiple bootstrap componentes. If it is your case, a suggest you subscribe does events by yourself. You can use or git repository as reference.
 
 ```ts
-import { Component } from '@angular/core';
-import { GoogleAnalyticsService } from 'ngx-google-analytics';
+import { NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule } from 'ngx-google-analytics';
+...
 
+@NgModule({
+  ...
+  imports: [
+    ...
+    NgxGoogleAnalyticsModule.forRoot(environment.ga),
+    NgxGoogleAnalyticsRouterModule
+//  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ]
+})
+export class AppModule {}
+```
+
+
+
+
+## GoogleAnalyticsService
+
+This service provides a easy and strong typed way to call `gtag()` command. It does nothing else then conver a strong typed list of arguments into a standard `gtag` api call.
+
+### Call Interface Events
+
+```ts
 @Component( ... )
 export class TestFormComponent {
 
   constructor(
-    protected $gaService: GoogleAnalyticsService
+    private gaService: GoogleAnalyticsService
   ) {}
 
   onUserInputName() {
@@ -67,12 +106,9 @@ export class TestFormComponent {
 }
 ```
 
-## Call GA Page Views and Virtual Page Views
+### Call GA Page Views and Virtual Page Views
 
 ```ts
-import { Component, OnInit } from '@angular/core';
-import { GoogleAnalyticsService } from 'ngx-google-analytics';
-
 @Component(...)
 export class TestPageComponent implements OnInit {
 
@@ -94,28 +130,36 @@ export class TestPageComponent implements OnInit {
 }
 ```
 
-## GA Directives
+## Directives
 
-You can use angular directives to call GA events.
+In a way to help you to be more productive on attach GA events on UI elements. We create some directives to handle `GoogleAnalyticsService` and add event listener by simple attributes.
 
 ### Simple directive use
 
+The default behaviour is call `gtag` on click events, but you can change the trigger to `focus` or `blur` events as well.
+
 ```js
 <div>
-  <button gaEvent gaCategory="ga_directive_test" gaAction="click_test">Click Test</button>
-  <button gaEvent gaCategory="ga_directive_test" gaAction="focus_test" gaBind="focus">Focus Test</button>
-  <button gaEvent gaCategory="ga_directive_test" gaAction="blur_test" gaBind="blur">Blur Test</button>
+  <button gaEvent="click_test" gaCategory="ga_directive_test">Click Test</button>
+  <button gaEvent="focus_test" gaCategory="ga_directive_test" gaBind="focus">Focus Test</button>
+  <button gaEvent="blur_test" gaCategory="ga_directive_test" gaBind="blur">Blur Test</button>
 </div>
 ```
 
 ### Simple input use
+
+If you atacchs gaEvent directive on form elements, it will assume focus event as default `trigger`.
+
 ```js
 <div>
-  <input gaEvent gaCategory="ga_directive_input_test" gaAction="fill_blur" placeholder="Auto Blur Test">
+  <input gaEvent="fill_blur" gaCategory="ga_directive_input_test" placeholder="Auto Blur Test">
 </div>
 ```
 
 ### Grouped directives
+
+Sometime your UX guy want to gromp several elements in the interface at same group to help his analystis and reports. Fortunaly the `gaCategory` directive can be placed on the highest level group element and all child `gaEvent` will assume the parent `gaCategory` as their parent.
+
 ```js
 <div gaCategory="ga_test_category">
   <button gaEvent gaAction="click_test">Click Test</button>
@@ -124,21 +168,3 @@ You can use angular directives to call GA events.
 </div>
 ```
 
-## Tracking Angular Router
-
-Add ```NgxGoogleAnalyticsRouterModule``` on AppModule to auto track Angular's Router class and trigger a page view after nagivation.
-
-```ts
-import { NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule } from 'ngx-google-analytics';
-...
-
-@NgModule({
-  ...
-  imports: [
-    ...
-    NgxGoogleAnalyticsModule.forRoot(environment.ga),
-    NgxGoogleAnalyticsRouterModule
-  ]
-})
-export class AppModule {}
-```

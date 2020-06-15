@@ -4,8 +4,8 @@
 name: Bump and Publish
 
 on:
-  release
-    # types: [released]
+  release:
+    types: [released]
     # refs/tags/x.x.x
 
 jobs:

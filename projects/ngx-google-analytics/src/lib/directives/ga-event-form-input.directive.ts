@@ -15,10 +15,17 @@ export class GaEventFormInputDirective {
     this.gaBind = 'focus';
   }
 
-  @Input() set gaBind(bind: GaBind) {
+  @Input()
+  set gaBind(bind: GaBind) {
     if (this.gaEvent) {
       this.gaEvent.gaBind = bind;
     }
+  }
+
+  get gaBind(): GaBind {
+    return (this.gaEvent)
+      ? this.gaEvent.gaBind
+      : null;
   }
 
 }

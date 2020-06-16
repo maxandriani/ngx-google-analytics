@@ -10,15 +10,15 @@ import { GtagFn } from '../types/gtag.type';
 })
 export class GoogleAnalyticsService {
 
-  private get document(): Document {
-    return this._document;
-  }
+  private readonly document: Document;
 
   constructor(
     @Inject(NGX_GOOGLE_ANALYTICS_SETTINGS_TOKEN) private readonly settings: IGoogleAnalyticsSettings,
-    @Inject(DOCUMENT) private readonly _document: any,
+    @Inject(DOCUMENT) readonly _document: any,
     @Inject(NGX_GTAG_FN) private readonly _gtag: GtagFn
-  ) { }
+  ) {
+    this.document = _document;
+  }
 
   private throw(err: Error) {
     if ((this.settings.ennableTracing || isDevMode()) && console && console.error) {

@@ -158,5 +158,8 @@
       }
     }
   },
-  "defaultProject": "ngx-google-analytics-sdk"
+  "defaultProject": "ngx-google-analytics-sdk",
+  "cli": {
+    "analytics": "cb79ff66-c50d-40a8-9f71-075d6508beeb"
+  }
 }

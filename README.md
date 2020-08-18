@@ -85,7 +85,7 @@ This service provides a easy and strong typed way to call `gtag()` command. It d
 export class TestFormComponent {
 
   constructor(
-    private gaService: GoogleAnalyticsService
+    private $gaService: GoogleAnalyticsService
   ) {}
 
   onUserInputName() {

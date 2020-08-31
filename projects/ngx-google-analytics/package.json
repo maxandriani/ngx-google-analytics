@@ -10,7 +10,7 @@
     "url": "https://github.com/maxandriani/ngx-google-analytics"
   },
   "peerDependencies": {
-    "@angular/common": "^8.0.2",
-    "@angular/core": "^8.0.2"
+    "@angular/common": "^9",
+    "@angular/core": "^9"
   }
 }

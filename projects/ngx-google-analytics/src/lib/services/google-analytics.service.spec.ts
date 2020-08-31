@@ -210,4 +210,16 @@ describe('GoogleAnalyticsService', () => {
 
   });
 
+  describe('gtag(`set`, ...)', () => {
+
+    it('should send `set` command on gtag() call', () => {
+      const setData = { currency: 'USD', country: 'US' },
+            ga: GoogleAnalyticsService = TestBed.get(GoogleAnalyticsService);
+
+      ga.set(setData);
+
+      expect(spyOnGtag).toHaveBeenCalledWith('set', setData);
+    });
+  });
+
 });

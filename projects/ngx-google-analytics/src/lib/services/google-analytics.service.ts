@@ -38,14 +38,10 @@ export class GoogleAnalyticsService {
 
   /**
    * Call native GA Tag
-   *
-   * @param action config|event
-   * @param command Action specialization
-   * @param options Command configuration
    */
-  gtag(action: string, command: string, ...options: Array<any>) {
+  gtag(...args: any[]) {
     try {
-      this._gtag(action, command, ...options);
+      this._gtag(...args.filter(x => x !== undefined));
     } catch (err) {
       this.throw(err);
     }
@@ -160,6 +156,26 @@ export class GoogleAnalyticsService {
       this.gtag('event', 'screen_view', this.toKeyValue(opt));
     } catch (error) {
       this.throw(error);
+    }
+  }
+
+  /**
+   * Defines persistent values on GoogleAnalytics
+   *
+   * @see https://developers.google.com/analytics/devguides/collection/gtagjs/setting-values
+   *
+   * ```js
+   * gtag('set', {
+   *   'currency': 'USD',
+   *   'country': 'US'
+   * });
+   * ```
+   */
+  set(...options: Array<any>) {
+    try {
+      this._gtag('set', ...options);
+    } catch (err) {
+      this.throw(err);
     }
   }
 

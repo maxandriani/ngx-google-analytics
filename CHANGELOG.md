@@ -1,5 +1,6 @@
 # CHANGELOG
 
+* [9.0.1](#9.0.1)
 * [9.0.0](#9.0.0)
 * [8.1.0](#8.1.0)
 * [8.0.0](#8.0.0)
@@ -9,6 +10,12 @@
 I open my heart to share this component w/ you guys, buy I don't have much free time to keep this projeto always up to date, so if you findo a Bug or a freek behaviour, please, fell free to open de source code and submit a PR to help yourself and other guys that use this lib too. :)
 
 I will upgrade this pack to any angular major version as soon as possible. Unfortunately I can't replicate new features to old compatibility versions. But you can fork this repo and port does features.
+
+## 9.0.1
+
+* Created set() method at GoogleAnalyticsService (https://developers.google.com/analytics/devguides/collection/gtagjs/setting-values);
+* Changed gtag() method signature at GoogleAnalyticsService to acept anything;
+* Added a filter to remove undefined values to rest parameter on gtag() fn;
 
 ## 9.0.0
 

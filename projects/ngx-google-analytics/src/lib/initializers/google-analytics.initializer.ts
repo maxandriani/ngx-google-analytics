@@ -71,6 +71,10 @@ export function GoogleAnalyticsInitializer(
     s.async = true;
     s.src = settings.uri;
 
+    if (settings.nonce) {
+      s.nonce = settings.nonce;
+    }
+
     const head: HTMLHeadElement = document.getElementsByTagName('head')[0];
     head.appendChild(s);
   };

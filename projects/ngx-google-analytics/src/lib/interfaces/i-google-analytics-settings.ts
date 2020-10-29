@@ -1,4 +1,4 @@
-import { IGoogleAnalyticsCommand } from './i-google-analytics-commant';
+import { IGoogleAnalyticsCommand } from './i-google-analytics-command';
 
 /**
  * Standardize an key-value objet to configure GA installation.

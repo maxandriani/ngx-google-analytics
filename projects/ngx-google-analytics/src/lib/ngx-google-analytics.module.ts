@@ -1,5 +1,5 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
-import { IGoogleAnalyticsCommand } from './interfaces/i-google-analytics-commant';
+import { IGoogleAnalyticsCommand } from './interfaces/i-google-analytics-command';
 import { NGX_GOOGLE_ANALYTICS_INITIALIZER_PROVIDER } from './initializers/google-analytics.initializer';
 import { NGX_GOOGLE_ANALYTICS_SETTINGS_TOKEN } from './tokens/ngx-google-analytics-settings-token';
 import { GaEventDirective } from './directives/ga-event.directive';

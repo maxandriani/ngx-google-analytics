@@ -4,7 +4,7 @@
 
 export * from './lib/initializers/google-analytics.initializer';
 export * from './lib/initializers/google-analytics-router.initializer';
-export * from './lib/interfaces/i-google-analytics-commant';
+export * from './lib/interfaces/i-google-analytics-command';
 export * from './lib/interfaces/i-google-analytics-settings';
 export * from './lib/tokens/ngx-data-layer-token';
 export * from './lib/tokens/ngx-google-analytics-settings-token';

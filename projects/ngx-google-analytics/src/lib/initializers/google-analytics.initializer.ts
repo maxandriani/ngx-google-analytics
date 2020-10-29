@@ -1,7 +1,7 @@
 import { Provider, APP_INITIALIZER, isDevMode } from '@angular/core';
 import { NGX_GOOGLE_ANALYTICS_SETTINGS_TOKEN } from '../tokens/ngx-google-analytics-settings-token';
 import { IGoogleAnalyticsSettings } from '../interfaces/i-google-analytics-settings';
-import { IGoogleAnalyticsCommand } from '../interfaces/i-google-analytics-commant';
+import { IGoogleAnalyticsCommand } from '../interfaces/i-google-analytics-command';
 import { NGX_GTAG_FN } from '../tokens/ngx-gtag-token';
 import { GtagFn } from '../types/gtag.type';
 import { DOCUMENT } from '@angular/common';

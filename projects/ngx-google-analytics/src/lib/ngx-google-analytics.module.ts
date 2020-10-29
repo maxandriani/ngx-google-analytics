@@ -5,6 +5,7 @@ import { NGX_GOOGLE_ANALYTICS_SETTINGS_TOKEN } from './tokens/ngx-google-analyti
 import { GaEventDirective } from './directives/ga-event.directive';
 import { GaEventCategoryDirective } from './directives/ga-event-category.directive';
 import { GaEventFormInputDirective } from './directives/ga-event-form-input.directive';
+import { IGoogleAnalyticsSettings } from './interfaces/i-google-analytics-settings';
 
 /**
  * Install Google Analytics Tracking code on your environment and configure tracking ID.
@@ -49,7 +50,7 @@ export class NgxGoogleAnalyticsModule {
             uri,
             enableTracing,
             nonce
-          }
+          } as IGoogleAnalyticsSettings
         },
         NGX_GOOGLE_ANALYTICS_INITIALIZER_PROVIDER,
       ]

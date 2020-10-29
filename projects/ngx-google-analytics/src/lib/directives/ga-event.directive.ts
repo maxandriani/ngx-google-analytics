@@ -76,7 +76,7 @@ export class GaEventDirective implements OnInit {
   }
 
   protected throw(err: Error) {
-    if ((isDevMode() || this.settings.ennableTracing) && console && console.warn) {
+    if ((isDevMode() || this.settings.enableTracing) && console && console.warn) {
       console.warn(err);
     }
   }

@@ -1,7 +1,7 @@
 import { IGoogleAnalyticsCommand } from './i-google-analytics-commant';
 
 /**
- * Standarized an key value objet to configure GA installation.
+ * Standardize an key-value objet to configure GA installation.
  */
 export interface IGoogleAnalyticsSettings {
   /** Is mandatory to provide a tracking code folks... */
@@ -10,8 +10,8 @@ export interface IGoogleAnalyticsSettings {
   initCommands?: Array<IGoogleAnalyticsCommand>;
   /** If Google changes the uri and I die, you can survive! */
   uri?: string;
-  /** If true, trace GA tracking errors on production mode */
-  ennableTracing?: boolean;
+  /** If true, trace GA tracking errors in production mode */
+  enableTracing?: boolean;
   /** If has a value, nonce will be added to script tag **/
   nonce?: string;
 }

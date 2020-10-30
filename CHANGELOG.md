@@ -1,5 +1,6 @@
 # CHANGELOG
 
+* [9.1.03(#9.1.0)
 * [9.0.1](#9.0.1)
 * [9.0.0](#9.0.0)
 * [8.1.0](#8.1.0)
@@ -7,9 +8,15 @@
 
 ## DISCLAIMER
 
-I open my heart to share this component w/ you guys, buy I don't have much free time to keep this projeto always up to date, so if you findo a Bug or a freek behaviour, please, fell free to open de source code and submit a PR to help yourself and other guys that use this lib too. :)
+I open my heart to share this component w/ you guys, buy I don't have much free time to keep this project always up to date, so if you find a Bug or a freek behaviour, please, fell free to open de source code and submit a PR to help yourself and other guys that use this lib too. :)
 
 I will upgrade this pack to any angular major version as soon as possible. Unfortunately I can't replicate new features to old compatibility versions. But you can fork this repo and port does features.
+
+## 9.1.0
+
+* Add nonce
+* Fix typos
+* Rename i-google-analytics-command.ts
 
 ## 9.0.1
 

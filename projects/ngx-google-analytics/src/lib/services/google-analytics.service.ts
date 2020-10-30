@@ -21,7 +21,7 @@ export class GoogleAnalyticsService {
   ) { }
 
   private throw(err: Error) {
-    if ((this.settings.ennableTracing || isDevMode()) && console && console.error) {
+    if ((this.settings.enableTracing || isDevMode()) && console && console.error) {
       console.error(err);
     }
   }

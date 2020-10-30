@@ -1,5 +1,5 @@
 /**
- * Standarizes a common comand protocol :)
+ * Standardizes a common command protocol :)
  */
 export interface IGoogleAnalyticsCommand {
   command: string;

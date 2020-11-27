@@ -15,6 +15,10 @@ I open my heart to share this component w/ you guys, buy I don't have much free 
 
 I will upgrade this pack to any angular major version as soon as possible. Unfortunately I can't replicate new features to old compatibility versions. But you can fork this repo and port does features.
 
+## 11.0.0
+
+* Bump to ng v11
+
 ## 10.0.0
 
 * Bump to ng v10

@@ -46,8 +46,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
       - run: npm ci --ignore-scripts
-      - run: npm --no-git-tag-version version ${{ steps.get_version.outputs.VERSION }}
-      - run: npm --no-git-tag-version version ${{ steps.get_version.outputs.VERSION }}
+      - run: npm --no-git-tag-version --allow-same-version version ${{ steps.get_version.outputs.VERSION }}
+      - run: npm --no-git-tag-version --allow-same-version version ${{ steps.get_version.outputs.VERSION }}
         working-directory: projects/ngx-google-analytics
       # - name: 'Commit Bump to ${{ steps.get_version.outputs.VERSION }}'
       #   run: |

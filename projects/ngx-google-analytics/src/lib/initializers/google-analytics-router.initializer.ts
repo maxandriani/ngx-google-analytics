@@ -1,6 +1,9 @@
 import { Provider, APP_BOOTSTRAP_LISTENER, ComponentRef } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+import { IGoogleAnalyticsRoutingSettings } from '../interfaces/i-google-analytics-routing-settings';
 import { GoogleAnalyticsService } from '../services/google-analytics.service';
+import { NGX_GOOGLE_ANALYTICS_ROUTING_SETTINGS_TOKEN } from '../tokens/ngx-google-analytics-router-settings-token';
+import { filter, skip } from 'rxjs/operators';
 
 /**
  * Provide a DI Configuration to attach GA Trigger to Router Events at Angular Startup Cycle.
@@ -10,6 +13,7 @@ export const NGX_GOOGLE_ANALYTICS_ROUTER_INITIALIZER_PROVIDER: Provider = {
   multi: true,
   useFactory: GoogleAnalyticsRouterInitializer,
   deps: [
+    NGX_GOOGLE_ANALYTICS_ROUTING_SETTINGS_TOKEN,
     GoogleAnalyticsService
   ]
 };
@@ -26,18 +30,35 @@ export const NGX_GOOGLE_ANALYTICS_ROUTER_INITIALIZER_PROVIDER: Provider = {
  * If you have this problem, I encourage not Use NgxGoogleAnalyticsRouterModule and atach the listener on AppComponent initialization.
  */
 export function GoogleAnalyticsRouterInitializer(
+  settings: IGoogleAnalyticsRoutingSettings,
   gaService: GoogleAnalyticsService
 ) {
   return async (c: ComponentRef<any>) => {
     const router = c.injector.get(Router);
+    const { include = [], exclude = [] } = settings ?? {};
+    const includeRules = normalizePathRules(include);
+    const excludeRules = normalizePathRules(exclude);
     const subs = router
       .events
-      .subscribe(event => {
-        if (event instanceof NavigationEnd) {
-          gaService.pageView(event.urlAfterRedirects, undefined);
-        }
-      });
+      .pipe(
+        filter((event: NavigationEnd) => event instanceof NavigationEnd),
+        skip(1), // Prevend double views on the first tigger (because GA Already send one ping on setup)
+        filter(event => includeRules.length > 0
+          ? includeRules.some(rule => rule.test(event.urlAfterRedirects))
+          : true),
+        filter(event => excludeRules.length > 0
+          ? !excludeRules.some(rule => rule.test(event.urlAfterRedirects))
+          : true)
+      )
+      .subscribe(event => gaService.pageView(event.urlAfterRedirects, undefined));
     // Cleanup
     c.onDestroy(() => subs.unsubscribe());
   };
+}
+
+/** Converts all path rules from string to Regex instances */
+function normalizePathRules(rules: Array<string | RegExp>): Array<RegExp> {
+  return rules.map(rule => (rule instanceof RegExp)
+    ? rule
+    : new RegExp(`^${rule.replace('*', '.*')}$`, 'i'));
 }

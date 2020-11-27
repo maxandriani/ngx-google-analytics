@@ -1,6 +1,6 @@
 import { ComponentRef, Injector } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { GoogleAnalyticsService } from '../services/google-analytics.service';
 import { GoogleAnalyticsRouterInitializer } from './google-analytics-router.initializer';
@@ -36,6 +36,7 @@ describe('googleAnalyticsRouterInitializer(settings, gaService)', () => {
     const factory = await GoogleAnalyticsRouterInitializer(null, gaService)(component);
 
     // act
+    router$.next(new NavigationStart(1, '/test'));
     router$.next(new NavigationEnd(1, '/test', '/test'));
     router$.next(new NavigationEnd(1, '/test', '/test'));
 
@@ -47,6 +48,7 @@ describe('googleAnalyticsRouterInitializer(settings, gaService)', () => {
     const factory = await GoogleAnalyticsRouterInitializer(null, gaService)(component);
 
     // act
+    router$.next(new NavigationStart(1, '/test'));
     router$.next(new NavigationEnd(1, '/test', '/test'));
     router$.next(new NavigationEnd(1, '/test', '/test'));
 
@@ -59,9 +61,12 @@ describe('googleAnalyticsRouterInitializer(settings, gaService)', () => {
     const factory = await GoogleAnalyticsRouterInitializer({ include: [ '/test' ] }, gaService)(component);
 
     // act
+    router$.next(new NavigationStart(1, '/test'));
     router$.next(new NavigationEnd(1, '/test', '/test'));
     router$.next(new NavigationEnd(1, '/test', '/test'));
+    router$.next(new NavigationStart(1, '/test1'));
     router$.next(new NavigationEnd(1, '/test1', '/test1'));
+    router$.next(new NavigationStart(1, '/test2'));
     router$.next(new NavigationEnd(1, '/test2', '/test2'));
 
     // asserts
@@ -73,8 +78,11 @@ describe('googleAnalyticsRouterInitializer(settings, gaService)', () => {
     const factory = await GoogleAnalyticsRouterInitializer({ exclude: [ '/test' ] }, gaService)(component);
 
     // act
+    router$.next(new NavigationStart(1, '/test1'));
     router$.next(new NavigationEnd(1, '/test1', '/test1'));
+    router$.next(new NavigationStart(1, '/test2'));
     router$.next(new NavigationEnd(1, '/test2', '/test2'));
+    router$.next(new NavigationStart(1, '/test'));
     router$.next(new NavigationEnd(1, '/test', '/test'));
     router$.next(new NavigationEnd(1, '/test', '/test'));
 
@@ -91,8 +99,10 @@ describe('googleAnalyticsRouterInitializer(settings, gaService)', () => {
     )(component);
 
     // act
+    router$.next(new NavigationStart(1, '/test-1'));
     router$.next(new NavigationEnd(1, '/test-1', '/test-1'));
     router$.next(new NavigationEnd(1, '/test-1', '/test-1'));
+    router$.next(new NavigationStart(1, '/test-2'));
     router$.next(new NavigationEnd(1, '/test-2', '/test-2'));
 
     // asserts
@@ -107,6 +117,7 @@ describe('googleAnalyticsRouterInitializer(settings, gaService)', () => {
     )(component);
 
     // act
+    router$.next(new NavigationStart(1, '/test-1'));
     router$.next(new NavigationEnd(1, '/test-1', '/test-1'));
     router$.next(new NavigationEnd(1, '/test-1', '/test-1'));
 
@@ -124,6 +135,7 @@ describe('googleAnalyticsRouterInitializer(settings, gaService)', () => {
     )(component);
 
     // act
+    router$.next(new NavigationStart(1, '/test-1'));
     router$.next(new NavigationEnd(1, '/test-1', '/test-1'));
     router$.next(new NavigationEnd(1, '/test-1', '/test-1'));
 
@@ -139,6 +151,7 @@ describe('googleAnalyticsRouterInitializer(settings, gaService)', () => {
     )(component);
 
     // act
+    router$.next(new NavigationStart(1, '/test-1'));
     router$.next(new NavigationEnd(1, '/test-1', '/test-1'));
     router$.next(new NavigationEnd(1, '/test-1', '/test-1'));
 

@@ -20,7 +20,7 @@ import { AppRoutingModule } from './app-routing.module';
     AppRoutingModule,
     RouterModule,
     NgxGoogleAnalyticsModule.forRoot(environment.ga),
-    NgxGoogleAnalyticsRouterModule,
+    NgxGoogleAnalyticsRouterModule.forRoot({ include: [ '/page-*' ] }),
   ],
   bootstrap: [AppComponent]
 })

@@ -51,8 +51,7 @@ export class NgxGoogleAnalyticsRouterModule {
         {
           provide: NGX_GOOGLE_ANALYTICS_ROUTING_SETTINGS_TOKEN,
           useValue: settings ?? {}
-        },
-        NGX_GOOGLE_ANALYTICS_ROUTER_INITIALIZER_PROVIDER,
+        }
       ]
     };
   }

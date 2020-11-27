@@ -10,7 +10,8 @@ Feedbacks on https://github.com/maxandriani/ngx-google-analytics
 * [Setup](#setup)
   * [NPM](#npm)
   * [Simple Setup](#simple-setup)
-  * [Routing Setup](#routing-setup)
+  * [Routing Setup](#routing-setup-module)
+  * [Advanced Routing Setup](#advanced-setup-routing-module)
 * [GoogleAnalyticsServie](#googleanalyticsservice)
 * [Directives](#directives)
 * [Changelog](CHANGELOG.md)
@@ -71,7 +72,28 @@ import { NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule } from 'ngx-go
 export class AppModule {}
 ```
 
+### Advanced Setup Routing Module
 
+You can customize some rules to include/exclude routes on `NgxGoogleAnalyticsRouterModule`. The include/exclude settings allow:
+* Simple route match: `{ include: [ '/full-uri-match' ] }`;
+* Wildcard route match: `{ include: [ '*/public/*' ] }`;
+* Regular Expression route match: `{ include: [ /^\/public\/.*/ ] }`;
+
+```ts
+import { NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule } from 'ngx-google-analytics';
+...
+
+@NgModule({
+  ...
+  imports: [
+    ...
+    NgxGoogleAnalyticsModule.forRoot(environment.ga),
+    NgxGoogleAnalyticsRouterModule.forRoot({ include: [...], exclude: [...] })
+//  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ]
+})
+export class AppModule {}
+```
 
 
 ## GoogleAnalyticsService

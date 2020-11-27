@@ -1,5 +1,6 @@
 # CHANGELOG
 
+* [9.2.0](#9.2.0)
 * [9.1.1](#9.1.1)
 * [9.1.0](#9.1.0)
 * [9.0.1](#9.0.1)
@@ -12,6 +13,11 @@
 I open my heart to share this component w/ you guys, buy I don't have much free time to keep this project always up to date, so if you find a Bug or a freek behaviour, please, fell free to open de source code and submit a PR to help yourself and other guys that use this lib too. :)
 
 I will upgrade this pack to any angular major version as soon as possible. Unfortunately I can't replicate new features to old compatibility versions. But you can fork this repo and port does features.
+
+## 9.2.0
+
+* Add include/exclude rules feature on NgxGoogleAnalyticsRouterModule.forRoot() to filter witch pages should trigger page-view event.
+* Remove `peerDependencies` from package.json to do not trigger unnecessary warnings on `npm install` command.
 
 ## 9.1.1
 

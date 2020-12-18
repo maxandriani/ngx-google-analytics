@@ -4,7 +4,7 @@ import { NgxGoogleAnalyticsModule } from '../ngx-google-analytics.module';
 import { GaEventCategoryDirective } from './ga-event-category.directive';
 import { GoogleAnalyticsService } from '../services/google-analytics.service';
 import { Component } from '@angular/core';
-import { GaAction } from '../types/ga-action.type';
+import { GaActionEnum } from '../enums/ga-action.enum';
 import { GaBind } from '../types/ga-bind.type';
 
 describe('GaEventDirective', () => {
@@ -50,13 +50,13 @@ describe('GaEventDirective', () => {
     `
   })
   class HostComponent {
-    gaAction: GaAction | string;
+    gaAction: GaActionEnum | string;
     gaLabel: string;
     label: string;
     gaValue: number;
     gaInteraction: boolean;
     gaBind: GaBind = 'click';
-    gaEvent: GaAction | string;
+    gaEvent: GaActionEnum | string;
   }
 
   let fixture: ComponentFixture<HostComponent>,

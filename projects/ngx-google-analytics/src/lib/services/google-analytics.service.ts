@@ -1,10 +1,11 @@
 import { Injectable, Inject, isDevMode } from '@angular/core';
 import { NGX_GOOGLE_ANALYTICS_SETTINGS_TOKEN } from '../tokens/ngx-google-analytics-settings-token';
 import { IGoogleAnalyticsSettings } from '../interfaces/i-google-analytics-settings';
-import { GaAction } from '../types/ga-action.type';
+import { GaActionEnum } from '../enums/ga-action.enum';
 import { DOCUMENT } from '@angular/common';
 import { NGX_GTAG_FN } from '../tokens/ngx-gtag-token';
 import { GtagFn } from '../types/gtag.type';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -61,7 +62,7 @@ export class GoogleAnalyticsService {
    * @param label 'My promotional video'
    * @param value An value to measure something
    */
-  event(action: GaAction | string, category?: string, label?: string, value?: number, interaction?: boolean) {
+  event(action: GaActionEnum | string, category?: string, label?: string, value?: number, interaction?: boolean) {
     try {
       const opt = new Map<string, any>();
       if (category) {
@@ -136,7 +137,7 @@ export class GoogleAnalyticsService {
    * ```
    *
    * @param screen 'screen_name'
-   * @param name 'app_name'
+   * @param appName 'app_name'
    * @param appId 'app_id'
    * @param appVersion 'app_version'
    * @param installerId 'app_installer_id'

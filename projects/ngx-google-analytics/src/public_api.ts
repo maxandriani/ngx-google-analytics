@@ -23,7 +23,6 @@ export * from './lib/tokens/ngx-window-token';
 
 export * from './lib/types/data-layer.type';
 export * from './lib/types/ga-action.type';
-export * from './lib/types/ga-bind.type';
 export * from './lib/types/gtag.type';
 
 export * from './lib/ngx-google-analytics.module';

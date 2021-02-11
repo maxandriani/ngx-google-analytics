@@ -38,7 +38,7 @@ export class NgxGoogleAnalyticsModule {
    * @param enableTracing When true, trace GA tracking errors on production mode.
    * @param nonce When placed, nonce will be added to script tag.
    */
-  static forRoot(trackingCode: string, commands: IGoogleAnalyticsCommand[] = [], uri?: string, enableTracing?: boolean, nonce?: string): ModuleWithProviders<NgxGoogleAnalyticsModule> {
+  static forRoot(trackingCode: string, initCommands: IGoogleAnalyticsCommand[] = [], uri?: string, enableTracing?: boolean, nonce?: string): ModuleWithProviders<NgxGoogleAnalyticsModule> {
     return {
       ngModule: NgxGoogleAnalyticsModule,
       providers: [
@@ -46,7 +46,7 @@ export class NgxGoogleAnalyticsModule {
           provide: NGX_GOOGLE_ANALYTICS_SETTINGS_TOKEN,
           useValue: {
             trackingCode,
-            commands,
+            initCommands,
             uri,
             enableTracing,
             nonce

@@ -61,7 +61,7 @@ export function GoogleAnalyticsInitializer(
       { command: 'config', values: [ settings.trackingCode ] }
     ];
 
-    settings.initCommands = [ ...initialCommands, ...(settings.initCommands || []) ];
+    settings.initCommands = [ ...initialCommands, ...(settings.commands || []) ];
 
     for (const command of settings.initCommands) {
       gtag(command.command, ...command.values);

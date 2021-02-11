@@ -6,6 +6,8 @@ export * from './lib/directives/ga-event-category.directive';
 export * from './lib/directives/ga-event.directive';
 export * from './lib/directives/ga-event-form-input.directive';
 
+export * from './lib/enums/ga-action.enum';
+
 export * from './lib/initializers/google-analytics.initializer';
 export * from './lib/initializers/google-analytics-router.initializer';
 

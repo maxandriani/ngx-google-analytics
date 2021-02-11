@@ -1,6 +1,5 @@
 import { Directive, Host, Optional, Input } from '@angular/core';
 import { GaEventDirective } from './ga-event.directive';
-import { GaBind } from '../types/ga-bind.type';
 
 @Directive({
   selector: `input[gaEvent],
@@ -15,7 +14,7 @@ export class GaEventFormInputDirective {
     this.gaBind = 'focus';
   }
 
-  @Input() set gaBind(bind: GaBind) {
+  @Input() set gaBind(bind: string) {
     if (this.gaEvent) {
       this.gaEvent.gaBind = bind;
     }

@@ -158,13 +158,14 @@ In a way to help you to be more productive on attach GA events on UI elements. W
 
 ### Simple directive use
 
-The default behaviour is call `gtag` on click events, but you can change the trigger to `focus` or `blur` events as well.
+The default behaviour is call `gtag` on click events, but you can change the trigger to any HTML Event (e.g. `focus`, `blur` or custom events) as well.
 
 ```js
 <div>
   <button gaEvent="click_test" gaCategory="ga_directive_test">Click Test</button>
   <button gaEvent="focus_test" gaCategory="ga_directive_test" gaBind="focus">Focus Test</button>
   <button gaEvent="blur_test" gaCategory="ga_directive_test" gaBind="blur">Blur Test</button>
+  <button gaEvent="custom_test" gaCategory="ga_directive_test" gaBind="customEvent">Custom Event Test</button>
 </div>
 ```
 

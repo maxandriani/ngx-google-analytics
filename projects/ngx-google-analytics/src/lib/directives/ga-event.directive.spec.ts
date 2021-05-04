@@ -1,11 +1,9 @@
 import { GaEventDirective } from './ga-event.directive';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { NgxGoogleAnalyticsModule } from '../ngx-google-analytics.module';
-import { GaEventCategoryDirective } from './ga-event-category.directive';
 import { GoogleAnalyticsService } from '../services/google-analytics.service';
 import { Component } from '@angular/core';
-import { GaAction } from '../types/ga-action.type';
-import { GaBind } from '../types/ga-bind.type';
+import { GaActionEnum } from '../enums/ga-action.enum';
 
 describe('GaEventDirective', () => {
 
@@ -47,16 +45,25 @@ describe('GaEventDirective', () => {
       [label]="label"
       [gaValue]="gaValue"
       [gaInteraction]="gaInteraction"></button>
+    <button
+      gaEvent="test-5"
+      class="test-5 test-custom"
+      [gaAction]="gaAction"
+      [gaLabel]="gaLabel"
+      [label]="label"
+      [gaValue]="gaValue"
+      [gaInteraction]="gaInteraction"
+      gaBind="custom"></button>
     `
   })
   class HostComponent {
-    gaAction: GaAction | string;
+    gaAction: GaActionEnum | string;
     gaLabel: string;
     label: string;
     gaValue: number;
     gaInteraction: boolean;
-    gaBind: GaBind = 'click';
-    gaEvent: GaAction | string;
+    gaBind = 'click';
+    gaEvent: GaActionEnum | string;
   }
 
   let fixture: ComponentFixture<HostComponent>,
@@ -100,7 +107,7 @@ describe('GaEventDirective', () => {
           input = fixture.debugElement.query(e => (e.nativeElement as HTMLButtonElement).classList.contains('test-click'));
 
     fixture.detectChanges();
-    input.triggerEventHandler('click', null);
+    input.nativeElement.click();
     fixture.detectChanges();
 
     expect(spyOnGa).toHaveBeenCalledWith('test-1', undefined, undefined, undefined, undefined);
@@ -112,7 +119,7 @@ describe('GaEventDirective', () => {
           input = fixture.debugElement.query(e => (e.nativeElement as HTMLButtonElement).classList.contains('test-focus'));
 
     fixture.detectChanges();
-    input.triggerEventHandler('focus', null);
+    input.nativeElement.dispatchEvent(new FocusEvent('focus'));
     fixture.detectChanges();
 
     expect(spyOnGa).toHaveBeenCalledWith('test-2', undefined, undefined, undefined, undefined);
@@ -124,10 +131,22 @@ describe('GaEventDirective', () => {
           input = fixture.debugElement.query(e => (e.nativeElement as HTMLButtonElement).classList.contains('test-blur'));
 
     fixture.detectChanges();
-    input.triggerEventHandler('blur', null);
+    input.nativeElement.dispatchEvent(new FocusEvent('blur'));
     fixture.detectChanges();
 
     expect(spyOnGa).toHaveBeenCalledWith('test-3', undefined, undefined, undefined, undefined);
+  });
+
+  it('should call `trigger on custom event`', () => {
+    const ga: GoogleAnalyticsService = TestBed.inject(GoogleAnalyticsService),
+      spyOnGa = spyOn(ga, 'event'),
+      input = fixture.debugElement.query(e => (e.nativeElement as HTMLButtonElement).classList.contains('test-custom'));
+
+    fixture.detectChanges();
+    input.nativeElement.dispatchEvent(new CustomEvent('custom'));
+    fixture.detectChanges();
+
+    expect(spyOnGa).toHaveBeenCalledWith('test-5', undefined, undefined, undefined, undefined);
   });
 
   it('should warn a message when try to call a event w/o gaEvent/gaAction value', () => {
@@ -136,7 +155,7 @@ describe('GaEventDirective', () => {
           input = fixture.debugElement.query(e => (e.nativeElement as HTMLButtonElement).classList.contains('test-category'));
 
     fixture.detectChanges();
-    input.triggerEventHandler('click', null);
+    input.nativeElement.click();
     fixture.detectChanges();
 
     expect(spyOnConsole).toHaveBeenCalled();
@@ -150,7 +169,7 @@ describe('GaEventDirective', () => {
 
     host.gaAction = action;
     fixture.detectChanges();
-    input.triggerEventHandler('click', null);
+    input.nativeElement.click();
     fixture.detectChanges();
 
     expect(spyOnGa).toHaveBeenCalledWith(action, 'test-4', undefined, undefined, undefined);
@@ -164,7 +183,7 @@ describe('GaEventDirective', () => {
 
     host.gaEvent = action;
     fixture.detectChanges();
-    input.triggerEventHandler('click', null);
+    input.nativeElement.click();
     fixture.detectChanges();
 
     expect(spyOnGa).toHaveBeenCalledWith(action, 'test-4', undefined, undefined, undefined);
@@ -178,7 +197,7 @@ describe('GaEventDirective', () => {
 
     host.gaAction = action;
     fixture.detectChanges();
-    input.triggerEventHandler('click', null);
+    input.nativeElement.click();
     fixture.detectChanges();
 
     expect(spyOnGa).toHaveBeenCalledWith(action, 'test-4', undefined, undefined, undefined);
@@ -194,7 +213,7 @@ describe('GaEventDirective', () => {
     host.gaAction = action;
     host.gaLabel = label;
     fixture.detectChanges();
-    input.triggerEventHandler('click', null);
+    input.nativeElement.click();
     fixture.detectChanges();
 
     expect(spyOnGa).toHaveBeenCalledWith(action, 'test-4', label, undefined, undefined);
@@ -210,7 +229,7 @@ describe('GaEventDirective', () => {
     host.gaAction = action;
     host.label = label;
     fixture.detectChanges();
-    input.triggerEventHandler('click', null);
+    input.nativeElement.click();
     fixture.detectChanges();
 
     expect(spyOnGa).toHaveBeenCalledWith(action, 'test-4', label, undefined, undefined);
@@ -226,7 +245,7 @@ describe('GaEventDirective', () => {
     host.gaAction = action;
     host.gaValue = value;
     fixture.detectChanges();
-    input.triggerEventHandler('click', null);
+    input.nativeElement.click();
     fixture.detectChanges();
 
     expect(spyOnGa).toHaveBeenCalledWith(action, 'test-4', undefined, value, undefined);
@@ -242,7 +261,7 @@ describe('GaEventDirective', () => {
     host.gaAction = action;
     host.gaInteraction = gaInteraction;
     fixture.detectChanges();
-    input.triggerEventHandler('click', null);
+    input.nativeElement.click();
     fixture.detectChanges();
 
     expect(spyOnGa).toHaveBeenCalledWith(action, 'test-4', undefined, undefined, gaInteraction);

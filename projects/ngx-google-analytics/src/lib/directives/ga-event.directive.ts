@@ -1,53 +1,52 @@
-import { Directive, Optional, Input, HostListener, OnInit, isDevMode, Inject } from '@angular/core';
-import { GaEventCategoryDirective } from './ga-event-category.directive';
-import { GoogleAnalyticsService } from '../services/google-analytics.service';
-import { GaBind } from '../types/ga-bind.type';
-import { GaAction } from '../types/ga-action.type';
-import { NGX_GOOGLE_ANALYTICS_SETTINGS_TOKEN } from '../tokens/ngx-google-analytics-settings-token';
-import { IGoogleAnalyticsSettings } from '../interfaces/i-google-analytics-settings';
+import {Directive, ElementRef, Inject, Input, isDevMode, OnDestroy, Optional} from '@angular/core';
+import {GaEventCategoryDirective} from './ga-event-category.directive';
+import {GoogleAnalyticsService} from '../services/google-analytics.service';
+import {GaActionEnum} from '../enums/ga-action.enum';
+import {NGX_GOOGLE_ANALYTICS_SETTINGS_TOKEN} from '../tokens/ngx-google-analytics-settings-token';
+import {IGoogleAnalyticsSettings} from '../interfaces/i-google-analytics-settings';
+import {fromEvent, Subscription} from 'rxjs';
 
 @Directive({
   selector: `[gaEvent]`,
   exportAs: 'gaEvent'
 })
-export class GaEventDirective implements OnInit {
+export class GaEventDirective implements OnDestroy {
 
   constructor(
     @Optional() private gaCategoryDirective: GaEventCategoryDirective,
     private gaService: GoogleAnalyticsService,
-    @Inject(NGX_GOOGLE_ANALYTICS_SETTINGS_TOKEN) private settings: IGoogleAnalyticsSettings
+    @Inject(NGX_GOOGLE_ANALYTICS_SETTINGS_TOKEN) private settings: IGoogleAnalyticsSettings,
+    private readonly el: ElementRef
   ) {
+    this.gaBind = 'click';
   }
 
-  @Input() gaAction: GaAction | string;
+  private bindSubscription?: Subscription;
+
+  @Input() gaAction: GaActionEnum | string;
   @Input() gaLabel: string;
   @Input() label: string;
   @Input() gaValue: number;
   @Input() gaInteraction: boolean;
-  @Input() gaBind: GaBind = 'click';
-  @Input() gaEvent: GaAction | string;
+  @Input() gaEvent: GaActionEnum | string;
 
-  ngOnInit() {
-  }
+  private _gaBind: string;
 
-  @HostListener('click')
-  onClick() {
-    if (this.gaBind === 'click') {
-      this.trigger();
+  @Input() set gaBind (gaBind: string) {
+    if (this.bindSubscription) {
+      this.bindSubscription.unsubscribe();
     }
+
+    this._gaBind = gaBind;
+    this.bindSubscription = fromEvent(this.el.nativeElement, gaBind).subscribe(() => this.trigger());
+  }
+  get gaBind(): string {
+    return this._gaBind;
   }
 
-  @HostListener('focus')
-  onFocus() {
-    if (this.gaBind === 'focus') {
-      this.trigger();
-    }
-  }
-
-  @HostListener('blur')
-  onBlur() {
-    if (this.gaBind === 'blur') {
-      this.trigger();
+  ngOnDestroy() {
+    if (this.bindSubscription) {
+      this.bindSubscription.unsubscribe();
     }
   }
 
@@ -59,7 +58,7 @@ export class GaEventDirective implements OnInit {
       // }
 
       if (!this.gaAction && !this.gaEvent) {
-        throw new Error('You must provide a gaAction atrribute to identify this event.');
+        throw new Error('You must provide a gaAction attribute to identify this event.');
       }
 
       this.gaService

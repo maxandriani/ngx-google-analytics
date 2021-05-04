@@ -28,7 +28,7 @@ npm install ngx-google-analytics
 
 ### Simple Setup
 
-On your Angular Project, you shall include the `NgxGoogleAnalyticsModule` on you highest level application module. ie `AddModule`. The easest install mode call the `forRoot()` method and pass the GA tracking code.
+On your Angular Project, you shall include the `NgxGoogleAnalyticsModule` on your highest level application module. ie `AddModule`. The easiest install mode call the `forRoot()` method and pass the GA tracking code.
 
 ```ts
 import { NgxGoogleAnalyticsModule } from 'ngx-google-analytics';
@@ -50,11 +50,11 @@ export class AppModule { }
 
 ### Setup Routing Module
 
-We provide a second Module Dependency to configure Router Event Bindings and performa automatic page view every time you application navigate to another page.
+We provide a second Module Dependency to configure Router Event Bindings and perform automatic page view every time your application navigates to another page.
 
 Add ```NgxGoogleAnalyticsRouterModule``` on AppModule enable auto track `Router` events.
 
-**IMPORTANT:** This Module just subscribe to Router events when the bootstrap component is created, and than cleanup any subscriptions related to previous compenente when it is destroyed. Maybe you may get some issues if using this module on a server side rendering or multiple bootstrap componentes. If it is your case, a suggest you subscribe does events by yourself. You can use or git repository as reference.
+**IMPORTANT:** This Module just subscribe to Router events when the bootstrap component is created, and then cleans up any subscriptions related to previous component when it is destroyed. You may get some issues if using this module on a server side rendering or multiple bootstrap components. If it is your case, I suggest you subscribe to events by yourself. You can use git repository as reference.
 
 ```ts
 import { NgxGoogleAnalyticsModule, NgxGoogleAnalyticsRouterModule } from 'ngx-google-analytics';
@@ -98,7 +98,7 @@ export class AppModule {}
 
 ## GoogleAnalyticsService
 
-This service provides a easy and strong typed way to call `gtag()` command. It does nothing else then conver a strong typed list of arguments into a standard `gtag` api call.
+This service provides an easy and strong typed way to call `gtag()` command. It does nothing else then convert a strong typed list of arguments into a standard `gtag` api call.
 
 ### Call Interface Events
 
@@ -158,19 +158,20 @@ In a way to help you to be more productive on attach GA events on UI elements. W
 
 ### Simple directive use
 
-The default behaviour is call `gtag` on click events, but you can change the trigger to `focus` or `blur` events as well.
+The default behaviour is call `gtag` on click events, but you can change the trigger to any HTML Event (e.g. `focus`, `blur` or custom events) as well.
 
 ```js
 <div>
   <button gaEvent="click_test" gaCategory="ga_directive_test">Click Test</button>
   <button gaEvent="focus_test" gaCategory="ga_directive_test" gaBind="focus">Focus Test</button>
   <button gaEvent="blur_test" gaCategory="ga_directive_test" gaBind="blur">Blur Test</button>
+  <button gaEvent="custom_test" gaCategory="ga_directive_test" gaBind="customEvent">Custom Event Test</button>
 </div>
 ```
 
 ### Simple input use
 
-If you atacchs gaEvent directive on form elements, it will assume focus event as default `trigger`.
+If you attach gaEvent directive on form elements, it will assume focus event as default `trigger`.
 
 ```js
 <div>
@@ -180,7 +181,7 @@ If you atacchs gaEvent directive on form elements, it will assume focus event as
 
 ### Grouped directives
 
-Sometime your UX guy want to gromp several elements in the interface at same group to help his analystis and reports. Fortunaly the `gaCategory` directive can be placed on the highest level group element and all child `gaEvent` will assume the parent `gaCategory` as their parent.
+Sometime your UX guy want to group several elements in the interface at same group to help his analysis and reports. Fortunaly the `gaCategory` directive can be placed on the highest level group element and all child `gaEvent` will assume the parent `gaCategory` as their parent.
 
 ```js
 <div gaCategory="ga_test_category">

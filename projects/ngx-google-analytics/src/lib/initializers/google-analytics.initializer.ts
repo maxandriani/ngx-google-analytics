@@ -56,12 +56,19 @@ export function GoogleAnalyticsInitializer(
     settings.uri = settings.uri || `https://www.googletagmanager.com/gtag/js?id=${settings.trackingCode}`;
 
     // these commands should run first!
-    const initialCommands: Array<IGoogleAnalyticsCommand> = [
-      { command: 'js', values: [ new Date() ] },
-      { command: 'config', values: [ settings.trackingCode ] }
-    ];
+    settings.initCommands = settings?.initCommands ?? [];
 
-    settings.initCommands = [ ...initialCommands, ...(settings.initCommands || []) ];
+    // assert config command
+    if (!settings.initCommands.find(x => x.command === 'config'))
+    {
+      settings.initCommands.unshift({ command: 'config', values: [ settings.trackingCode ] })
+    }
+
+    // assert js command
+    if (!settings.initCommands.find(x => x.command === 'js'))
+    {
+      settings.initCommands.unshift({ command: 'js', values: [ new Date() ] })
+    }
 
     for (const command of settings.initCommands) {
       gtag(command.command, ...command.values);

@@ -6,11 +6,16 @@ Feedbacks on https://github.com/maxandriani/ngx-google-analytics
 
 ![Build and Tests](https://github.com/maxandriani/ngx-google-analytics/workflows/Build%20and%20Tests/badge.svg)
 
+# Notice
+
+I'm investing a big amount of time studing new technologies for my daily job, and I am not able to invest a significant amount of time into maintaining `ngx-google-analytics` properly. I am looking for volunteers who would like to become active maintainers on the project. If you are interested, please shoot me a note.
+
+# Index
 
 * [Setup](#setup)
   * [NPM](#npm)
   * [Simple Setup](#simple-setup)
-  * [Routing Setup](#routing-setup-module)
+  * [Routing Setup](#setup-routing-module)
   * [Advanced Routing Setup](#advanced-setup-routing-module)
 * [GoogleAnalyticsServie](#googleanalyticsservice)
 * [Directives](#directives)

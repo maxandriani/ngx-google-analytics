@@ -1,5 +1,6 @@
 # CHANGELOG
 
+* [12.0.0](#12.0.0)
 * [11.2.1](#11.2.1)
 * [11.2.0](#11.2.0)
 * [11.1.0](#11.1.0)
@@ -18,6 +19,9 @@
 I open my heart to share this component w/ you guys, buy I don't have much free time to keep this project always up to date, so if you find a Bug or a freek behaviour, please, fell free to open de source code and submit a PR to help yourself and other guys that use this lib too. :)
 
 I will upgrade this pack to any angular major version as soon as possible. Unfortunately I can't replicate new features to old compatibility versions. But you can fork this repo and port does features.
+
+## 12.0.0
+* Bump to ng v12
 
 ## 11.2.1
 

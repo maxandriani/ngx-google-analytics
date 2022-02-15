@@ -5,7 +5,7 @@
     "ng": "ng",
     "prestart": "npm run build",
     "start": "ng serve",
-    "build": "ng build ngx-google-analytics --configuration production",
+    "build": "ng build ngx-google-analytics",
     "test": "ng test ngx-google-analytics --browsers=ChromeHeadless --watch=false",
     "test:dev": "ng test ngx-google-analytics",
     "lint": "ng lint ngx-google-analytics",

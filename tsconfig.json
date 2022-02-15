@@ -21,11 +21,9 @@
     ],
     "paths": {
       "ngx-google-analytics": [
-        "dist/ngx-google-analytics",
         "dist/ngx-google-analytics"
       ],
       "ngx-google-analytics/*": [
-        "dist/ngx-google-analytics/*",
         "dist/ngx-google-analytics/*"
       ]
     }

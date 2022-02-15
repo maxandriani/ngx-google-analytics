@@ -40,7 +40,7 @@ describe('GaEventFormInputDirective', () => {
 
   beforeEach(() => {
     gaCategory = new GaEventCategoryDirective();
-    gaEvent = new GaEventDirective(gaCategory, TestBed.get(GoogleAnalyticsService), TestBed.get(NGX_GOOGLE_ANALYTICS_SETTINGS_TOKEN), fixture.elementRef);
+    gaEvent = new GaEventDirective(gaCategory, TestBed.inject(GoogleAnalyticsService), TestBed.inject(NGX_GOOGLE_ANALYTICS_SETTINGS_TOKEN), fixture.elementRef);
     gaEventFormInput = new GaEventFormInputDirective(gaEvent);
   });
 
@@ -58,7 +58,7 @@ describe('GaEventFormInputDirective', () => {
   });
 
   it('should call `GoogleAnalyticsService.event()` on trigger focus at input', () => {
-    const ga: GoogleAnalyticsService = TestBed.get(GoogleAnalyticsService),
+    const ga: GoogleAnalyticsService = TestBed.inject(GoogleAnalyticsService),
           spyOnGa = spyOn(ga, 'event'),
           input = fixture.debugElement.query(e => e.name === 'input');
 

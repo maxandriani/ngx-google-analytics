@@ -180,13 +180,14 @@ If you attach gaEvent directive on form elements, it will assume focus event as 
 
 ```js
 <div>
-  <input gaEvent="fill_blur" gaCategory="ga_directive_input_test" placeholder="Auto Blur Test">
+  <input gaEvent="fill_blur" gaCategory="ga_directive_input_test" placeholder="Auto Blur Test"/>
 </div>
 ```
 
 ### Grouped directives
 
-Sometime your UX guy want to group several elements in the interface at same group to help his analysis and reports. Fortunaly the `gaCategory` directive can be placed on the highest level group element and all child `gaEvent` will assume the parent `gaCategory` as their parent.
+Sometimes your UX guy want to group several elements in the interface at same group to help his analysis and reports. Fortunately the `gaCategory` directive can be placed on the highest level group 
+element and all child `gaEvent` will assume the parent `gaCategory` as their parent.
 
 ```js
 <div gaCategory="ga_test_category">

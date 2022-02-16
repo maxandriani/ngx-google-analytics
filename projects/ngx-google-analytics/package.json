@@ -1,12 +1,12 @@
 {
   "name": "ngx-google-analytics",
-  "version": "13.0.0",
+  "version": "13.0.1",
   "description": "A simple ng-9 wrapper to load Google Analytics dependency by angular way",
   "keywords": [ "google", "google analytics", "angular", "angular-9+", "typescript" ],
   "homepage": "https://github.com/maxandriani/ngx-google-analytics",
   "license": "MIT",
   "dependencies": {
-    "tslib": "^2.0.0"
+    "tslib": "^2.3.1"
   },
   "repository": {
     "type": "git",

@@ -88,11 +88,10 @@ describe('GaEventDirective', () => {
     //   .query(c => c.classes['test-4'])
     //   .injector
     //   .get(GaEventCategoryDirective);
-    // gaEvent = new GaEventDirective(gaCategory, TestBed.get(GoogleAnalyticsService));
+    // gaEvent = new GaEventDirective(gaCategory, TestBed.inject(GoogleAnalyticsService));
   });
 
   it('should create an instance', () => {
-    debugger;
     const gaEvent = fixture
       .debugElement
       .query(i => (i.nativeElement as HTMLButtonElement).classList.contains('test-1'))
@@ -102,7 +101,7 @@ describe('GaEventDirective', () => {
   });
 
   it('should call `trigger` on click event', () => {
-    const ga: GoogleAnalyticsService = TestBed.get(GoogleAnalyticsService),
+    const ga: GoogleAnalyticsService = TestBed.inject(GoogleAnalyticsService),
           spyOnGa = spyOn(ga, 'event'),
           input = fixture.debugElement.query(e => (e.nativeElement as HTMLButtonElement).classList.contains('test-click'));
 
@@ -114,7 +113,7 @@ describe('GaEventDirective', () => {
   });
 
   it('should call `trigger` on focus event', () => {
-    const ga: GoogleAnalyticsService = TestBed.get(GoogleAnalyticsService),
+    const ga: GoogleAnalyticsService = TestBed.inject(GoogleAnalyticsService),
           spyOnGa = spyOn(ga, 'event'),
           input = fixture.debugElement.query(e => (e.nativeElement as HTMLButtonElement).classList.contains('test-focus'));
 
@@ -126,7 +125,7 @@ describe('GaEventDirective', () => {
   });
 
   it('should call `trigger on blur event`', () => {
-    const ga: GoogleAnalyticsService = TestBed.get(GoogleAnalyticsService),
+    const ga: GoogleAnalyticsService = TestBed.inject(GoogleAnalyticsService),
           spyOnGa = spyOn(ga, 'event'),
           input = fixture.debugElement.query(e => (e.nativeElement as HTMLButtonElement).classList.contains('test-blur'));
 
@@ -150,7 +149,7 @@ describe('GaEventDirective', () => {
   });
 
   it('should warn a message when try to call a event w/o gaEvent/gaAction value', () => {
-    const ga: GoogleAnalyticsService = TestBed.get(GoogleAnalyticsService),
+    const ga: GoogleAnalyticsService = TestBed.inject(GoogleAnalyticsService),
           spyOnConsole = spyOn(console, 'warn'),
           input = fixture.debugElement.query(e => (e.nativeElement as HTMLButtonElement).classList.contains('test-category'));
 
@@ -162,7 +161,7 @@ describe('GaEventDirective', () => {
   });
 
   it('should grab gaAction and pass to event trigger', () => {
-    const ga: GoogleAnalyticsService = TestBed.get(GoogleAnalyticsService),
+    const ga: GoogleAnalyticsService = TestBed.inject(GoogleAnalyticsService),
           action = 'action-t',
           spyOnGa = spyOn(ga, 'event'),
           input = fixture.debugElement.query(e => (e.nativeElement as HTMLButtonElement).classList.contains('test-category'));
@@ -176,7 +175,7 @@ describe('GaEventDirective', () => {
   });
 
   it('should grab gaEvent and pass to event trigger', () => {
-    const ga: GoogleAnalyticsService = TestBed.get(GoogleAnalyticsService),
+    const ga: GoogleAnalyticsService = TestBed.inject(GoogleAnalyticsService),
           action = 'action-t',
           spyOnGa = spyOn(ga, 'event'),
           input = fixture.debugElement.query(e => (e.nativeElement as HTMLButtonElement).classList.contains('test-category'));
@@ -190,7 +189,7 @@ describe('GaEventDirective', () => {
   });
 
   it('should grab gaCategory and pass to event trigger', () => {
-    const ga: GoogleAnalyticsService = TestBed.get(GoogleAnalyticsService),
+    const ga: GoogleAnalyticsService = TestBed.inject(GoogleAnalyticsService),
           action = 'action-t',
           spyOnGa = spyOn(ga, 'event'),
           input = fixture.debugElement.query(e => (e.nativeElement as HTMLButtonElement).classList.contains('test-category'));
@@ -204,7 +203,7 @@ describe('GaEventDirective', () => {
   });
 
   it('should grab gaLabel and pass to event trigger', () => {
-    const ga: GoogleAnalyticsService = TestBed.get(GoogleAnalyticsService),
+    const ga: GoogleAnalyticsService = TestBed.inject(GoogleAnalyticsService),
           action = 'action-t',
           label = 'label-t',
           spyOnGa = spyOn(ga, 'event'),
@@ -220,7 +219,7 @@ describe('GaEventDirective', () => {
   });
 
   it('should grab label and pass to event trigger', () => {
-    const ga: GoogleAnalyticsService = TestBed.get(GoogleAnalyticsService),
+    const ga: GoogleAnalyticsService = TestBed.inject(GoogleAnalyticsService),
           action = 'action-t',
           label = 'label-t',
           spyOnGa = spyOn(ga, 'event'),
@@ -236,7 +235,7 @@ describe('GaEventDirective', () => {
   });
 
   it('should grab gaValue and pass to event trigger', () => {
-    const ga: GoogleAnalyticsService = TestBed.get(GoogleAnalyticsService),
+    const ga: GoogleAnalyticsService = TestBed.inject(GoogleAnalyticsService),
           action = 'action-t',
           value = 40,
           spyOnGa = spyOn(ga, 'event'),
@@ -252,7 +251,7 @@ describe('GaEventDirective', () => {
   });
 
   it('should grab gaInteraction and pass to event trigger', () => {
-    const ga: GoogleAnalyticsService = TestBed.get(GoogleAnalyticsService),
+    const ga: GoogleAnalyticsService = TestBed.inject(GoogleAnalyticsService),
           action = 'action-t',
           gaInteraction = true,
           spyOnGa = spyOn(ga, 'event'),

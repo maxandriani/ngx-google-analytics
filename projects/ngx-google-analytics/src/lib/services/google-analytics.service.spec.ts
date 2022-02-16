@@ -30,7 +30,7 @@ describe('GoogleAnalyticsService', () => {
   it('should call gtag fn w/ action/command pair', () => {
     const action = 'action',
           command = 'command',
-          ga: GoogleAnalyticsService = TestBed.get(GoogleAnalyticsService);
+          ga: GoogleAnalyticsService = TestBed.inject(GoogleAnalyticsService);
     // act
     ga.gtag(action, command);
     // specs
@@ -41,7 +41,7 @@ describe('GoogleAnalyticsService', () => {
 
     it('should call a `event` action on gtag command', () => {
       const action = 'video_auto_play_start',
-            ga: GoogleAnalyticsService = TestBed.get(GoogleAnalyticsService);
+            ga: GoogleAnalyticsService = TestBed.inject(GoogleAnalyticsService);
 
       ga.event(action);
 
@@ -51,7 +51,7 @@ describe('GoogleAnalyticsService', () => {
     it('should find `event_category` property on gtag command', () => {
       const action = 'video_auto_play_start',
             event_category = 'video_auto_play',
-            ga: GoogleAnalyticsService = TestBed.get(GoogleAnalyticsService);
+            ga: GoogleAnalyticsService = TestBed.inject(GoogleAnalyticsService);
 
       ga.event(action, event_category);
 
@@ -61,7 +61,7 @@ describe('GoogleAnalyticsService', () => {
     it('should find `event_label` property on gtag command', () => {
       const action = 'video_auto_play_start',
             event_label = 'My promotional video',
-            ga: GoogleAnalyticsService = TestBed.get(GoogleAnalyticsService);
+            ga: GoogleAnalyticsService = TestBed.inject(GoogleAnalyticsService);
 
       ga.event(action, undefined, event_label);
 
@@ -71,7 +71,7 @@ describe('GoogleAnalyticsService', () => {
     it('should find `value` property on gtag command', () => {
       const action = 'video_auto_play_start',
             value = 40,
-            ga: GoogleAnalyticsService = TestBed.get(GoogleAnalyticsService);
+            ga: GoogleAnalyticsService = TestBed.inject(GoogleAnalyticsService);
 
       ga.event(action, undefined, undefined, value);
 
@@ -81,7 +81,7 @@ describe('GoogleAnalyticsService', () => {
     it('should find `interaction` property on gtag command', () => {
       const action = 'video_auto_play_start',
             interaction = true,
-            ga: GoogleAnalyticsService = TestBed.get(GoogleAnalyticsService);
+            ga: GoogleAnalyticsService = TestBed.inject(GoogleAnalyticsService);
 
       ga.event(action, undefined, undefined, undefined, interaction);
 
@@ -94,7 +94,7 @@ describe('GoogleAnalyticsService', () => {
 
     it('should call a `config` action on gtag command', () => {
       const page_path = '/page.html',
-            ga: GoogleAnalyticsService = TestBed.get(GoogleAnalyticsService);
+            ga: GoogleAnalyticsService = TestBed.inject(GoogleAnalyticsService);
 
       ga.pageView(page_path);
 
@@ -104,7 +104,7 @@ describe('GoogleAnalyticsService', () => {
     it('should send `page_title` attribute on gtag command', () => {
       const page_path = '/page.html',
             page_title = 'My Page View',
-            ga: GoogleAnalyticsService = TestBed.get(GoogleAnalyticsService);
+            ga: GoogleAnalyticsService = TestBed.inject(GoogleAnalyticsService);
 
       ga.pageView(page_path, page_title);
 
@@ -114,7 +114,7 @@ describe('GoogleAnalyticsService', () => {
     it('should send `page_location` attribute on gtag command', () => {
       const page_path = '/page.html',
             page_location = 'my location',
-            ga: GoogleAnalyticsService = TestBed.get(GoogleAnalyticsService);
+            ga: GoogleAnalyticsService = TestBed.inject(GoogleAnalyticsService);
 
       ga.pageView(page_path, undefined, page_location);
 
@@ -123,7 +123,7 @@ describe('GoogleAnalyticsService', () => {
 
     it('should use `document.location.href` as a default `page_location`', () => {
       const page_path = '/page.html',
-            ga: GoogleAnalyticsService = TestBed.get(GoogleAnalyticsService);
+            ga: GoogleAnalyticsService = TestBed.inject(GoogleAnalyticsService);
 
       ga.pageView(page_path, undefined);
 
@@ -137,7 +137,7 @@ describe('GoogleAnalyticsService', () => {
     it('should call a `event` action on gtag command', () => {
       const screen_name = 'Home Screen',
             app_name = 'My App',
-            ga: GoogleAnalyticsService = TestBed.get(GoogleAnalyticsService);
+            ga: GoogleAnalyticsService = TestBed.inject(GoogleAnalyticsService);
 
       ga.appView(screen_name, app_name);
 
@@ -148,7 +148,7 @@ describe('GoogleAnalyticsService', () => {
       const screen_name = 'Home Screen',
             app_name = 'My App',
             app_id = '2333',
-            ga: GoogleAnalyticsService = TestBed.get(GoogleAnalyticsService);
+            ga: GoogleAnalyticsService = TestBed.inject(GoogleAnalyticsService);
 
       ga.appView(screen_name, app_name, app_id);
 
@@ -159,7 +159,7 @@ describe('GoogleAnalyticsService', () => {
       const screen_name = 'Home Screen',
             app_name = 'My App',
             app_version = 'v1.0',
-            ga: GoogleAnalyticsService = TestBed.get(GoogleAnalyticsService);
+            ga: GoogleAnalyticsService = TestBed.inject(GoogleAnalyticsService);
 
       ga.appView(screen_name, app_name, undefined, app_version);
 
@@ -170,7 +170,7 @@ describe('GoogleAnalyticsService', () => {
       const screen_name = 'Home Screen',
             app_name = 'My App',
             app_installer_id = '30000',
-            ga: GoogleAnalyticsService = TestBed.get(GoogleAnalyticsService);
+            ga: GoogleAnalyticsService = TestBed.inject(GoogleAnalyticsService);
 
       ga.appView(screen_name, app_name, undefined, undefined, app_installer_id);
 
@@ -183,7 +183,7 @@ describe('GoogleAnalyticsService', () => {
   describe('gtag(`event`, `exception`)', () => {
 
     it('should call `event` action w/ `exception type on gtag command`', () => {
-      const ga: GoogleAnalyticsService = TestBed.get(GoogleAnalyticsService);
+      const ga: GoogleAnalyticsService = TestBed.inject(GoogleAnalyticsService);
 
       ga.exception();
 
@@ -192,7 +192,7 @@ describe('GoogleAnalyticsService', () => {
 
     it('should send `description` attribute on gtag command', () => {
       const description = 'Deu muito ruim',
-            ga: GoogleAnalyticsService = TestBed.get(GoogleAnalyticsService);
+            ga: GoogleAnalyticsService = TestBed.inject(GoogleAnalyticsService);
 
       ga.exception(description);
 
@@ -201,7 +201,7 @@ describe('GoogleAnalyticsService', () => {
 
     it('should send `fatal` attribute on gtag command', () => {
       const fatal = true,
-            ga: GoogleAnalyticsService = TestBed.get(GoogleAnalyticsService);
+            ga: GoogleAnalyticsService = TestBed.inject(GoogleAnalyticsService);
 
       ga.exception(undefined, fatal);
 
@@ -214,7 +214,7 @@ describe('GoogleAnalyticsService', () => {
 
     it('should send `set` command on gtag() call', () => {
       const setData = { currency: 'USD', country: 'US' },
-            ga: GoogleAnalyticsService = TestBed.get(GoogleAnalyticsService);
+            ga: GoogleAnalyticsService = TestBed.inject(GoogleAnalyticsService);
 
       ga.set(setData);
 

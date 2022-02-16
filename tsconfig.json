@@ -9,7 +9,6 @@
     "declaration": false,
     "module": "es2020",
     "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "target": "es2015",
     "typeRoots": [
@@ -21,11 +20,9 @@
     ],
     "paths": {
       "ngx-google-analytics": [
-        "dist/ngx-google-analytics",
         "dist/ngx-google-analytics"
       ],
       "ngx-google-analytics/*": [
-        "dist/ngx-google-analytics/*",
         "dist/ngx-google-analytics/*"
       ]
     }

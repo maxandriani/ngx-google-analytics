@@ -84,7 +84,7 @@ jobs:
           name: ${{ steps.get_version.outputs.VERSION }}.tgz
       - uses: actions/setup-node@v1
         with:
-          node-version: 10
+          node-version: 14
           registry-url: https://registry.npmjs.org/
       - run: npm publish ngx-google-analytics-${{ steps.get_version.outputs.VERSION }}.tgz
         env:

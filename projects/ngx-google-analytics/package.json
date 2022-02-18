@@ -6,7 +6,7 @@
   "homepage": "https://github.com/maxandriani/ngx-google-analytics",
   "license": "MIT",
   "dependencies": {
-    "tslib": "^2.3.1"
+    "tslib": "^2.0.0"
   },
   "repository": {
     "type": "git",

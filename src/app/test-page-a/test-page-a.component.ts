@@ -1,15 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-test-page-a',
+  selector: 'ga-app-test-page-a',
   templateUrl: './test-page-a.component.html',
   styleUrls: ['./test-page-a.component.css']
 })
-export class TestPageAComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+export class TestPageAComponent {
 }

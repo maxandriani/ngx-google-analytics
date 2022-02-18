@@ -61,8 +61,7 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-          },
+          "options": {},
           "configurations": {
             "production": {
               "browserTarget": "ngx-google-analytics-sdk:build:production"
@@ -118,8 +117,12 @@
           "defaultConfiguration": "development"
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ],
             "tsConfig": "e2e/tsconfig.e2e.json",
             "exclude": [
               "**/node_modules/**"
@@ -155,12 +158,22 @@
             "tsConfig": "projects/ngx-google-analytics/tsconfig.spec.json",
             "karmaConfig": "projects/ngx-google-analytics/karma.conf.js"
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
         }
       }
     }
   },
   "defaultProject": "ngx-google-analytics-sdk",
   "cli": {
-    "analytics": "3ce39043-c695-45ae-9eeb-07fed5fb3a2e"
+    "analytics": "3ce39043-c695-45ae-9eeb-07fed5fb3a2e",
+    "defaultCollection": "@angular-eslint/schematics"
   }
 }

@@ -26,10 +26,6 @@ I will upgrade this pack to any angular major version as soon as possible. Unfor
 * Bump Karma
 * Bump Jasmine
 * Bump RXJS to 7.4.0
-* Bump Types dependencies
-* Clean up deprecated testing variables
-* Fix typos and duplicated variables
-* Run TSLint and clean up code
 
 ## 13.0.0
 * Bump to ng v13

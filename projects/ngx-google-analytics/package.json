@@ -8,6 +8,10 @@
   "dependencies": {
     "tslib": "^2.0.0"
   },
+  "peerDependencies": {
+    "@angular/common": "^13.2.2",
+    "@angular/core": "^13.2.2"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/maxandriani/ngx-google-analytics"

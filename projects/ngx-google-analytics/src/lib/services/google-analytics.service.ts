@@ -61,6 +61,7 @@ export class GoogleAnalyticsService {
    * @param category 'video_auto_play'
    * @param label 'My promotional video'
    * @param value An value to measure something
+   * @param interaction If user interaction is performed
    */
   event(action: GaActionEnum | string, category?: string, label?: string, value?: number, interaction?: boolean) {
     try {

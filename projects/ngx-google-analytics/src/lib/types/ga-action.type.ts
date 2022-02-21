@@ -22,6 +22,5 @@ export type GaAction = 'view_search_results'
                         | 'sign_up'
                         | 'view_item'
                         | 'view_item_list'
-                        | 'view_promotion'
-                        | 'view_search_results';
+                        | 'view_promotion';
 

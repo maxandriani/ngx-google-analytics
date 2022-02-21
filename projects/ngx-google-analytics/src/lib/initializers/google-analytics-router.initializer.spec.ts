@@ -18,12 +18,12 @@ describe('googleAnalyticsRouterInitializer(settings, gaService)', () => {
       component: ComponentRef<any>;
 
   beforeEach(() => {
-    gaService = TestBed.inject(GoogleAnalyticsService),
-    spyOnGaService = spyOn(gaService, 'pageView'),
-    router$ = new Subject<any>(),
+    gaService = TestBed.inject(GoogleAnalyticsService);
+    spyOnGaService = spyOn(gaService, 'pageView');
+    router$ = new Subject<any>();
     router = fakeTransform<Router>({
       events: router$
-    }),
+    });
     component = fakeTransform<ComponentRef<any>>({
       injector: fakeTransform<Injector>({
         get: () => router

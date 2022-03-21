@@ -17,7 +17,7 @@ I'm investing a big amount of time studing new technologies for my daily job, an
   * [Simple Setup](#simple-setup)
   * [Routing Setup](#setup-routing-module)
   * [Advanced Routing Setup](#advanced-setup-routing-module)
-* [GoogleAnalyticsServie](#googleanalyticsservice)
+* [GoogleAnalyticsService](#googleanalyticsservice)
 * [Directives](#directives)
 * [Changelog](CHANGELOG.md)
 

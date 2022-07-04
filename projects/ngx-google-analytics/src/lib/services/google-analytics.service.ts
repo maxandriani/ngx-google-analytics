@@ -63,7 +63,7 @@ export class GoogleAnalyticsService {
    * @param value An value to measure something
    * @param interaction If user interaction is performed
    */
-  event(action: GaActionEnum | string, category?: string, label?: string, value?: number, interaction?: boolean) {
+  event(action: GaActionEnum | string, category?: string, label?: string, value?: number, interaction?: boolean, options?: Object) {
     try {
       const opt = new Map<string, any>();
       if (category) {
@@ -78,6 +78,11 @@ export class GoogleAnalyticsService {
       if (interaction !== undefined) {
         opt.set('interaction', interaction);
       }
+      if (options) {
+        Object
+          .entries(options)
+          .map(([key, value]) => opt.set(key, value));
+      }      
       const params = this.toKeyValue(opt);
       if (params) {
         this.gtag('event', action as string, params);

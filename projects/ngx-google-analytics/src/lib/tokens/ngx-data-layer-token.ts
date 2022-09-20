@@ -1,11 +1,12 @@
 import { DataLayer } from '../types/data-layer.type';
 import { InjectionToken, inject } from '@angular/core';
 import { NGX_WINDOW } from './ngx-window-token';
+import { GaWindow } from './ngx-google-analytics-window';
 
 /**
  * Check if there is some global function called gtag on Window object, or create an empty function to doesn't brake codes...
  */
-export function getDataLayerFn(window: Window): DataLayer {
+export function getDataLayerFn(window: GaWindow): DataLayer {
   return (window)
     ? window['dataLayer'] = window['dataLayer'] || []
     : null;

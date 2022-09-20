@@ -23,14 +23,14 @@ export class GaEventDirective implements OnDestroy {
 
   private bindSubscription?: Subscription;
 
-  @Input() gaAction: GaActionEnum | string;
-  @Input() gaLabel: string;
-  @Input() label: string;
-  @Input() gaValue: number;
-  @Input() gaInteraction: boolean;
-  @Input() gaEvent: GaActionEnum | string;
+  @Input() gaAction!: GaActionEnum | string;
+  @Input() gaLabel!: string;
+  @Input() label!: string;
+  @Input() gaValue!: number;
+  @Input() gaInteraction!: boolean;
+  @Input() gaEvent!: GaActionEnum | string;
 
-  private _gaBind: string;
+  private _gaBind!: string;
 
   @Input() set gaBind (gaBind: string) {
     if (this.bindSubscription) {
@@ -69,7 +69,7 @@ export class GaEventDirective implements OnDestroy {
             this.gaValue,
             this.gaInteraction
           );
-    } catch (err) {
+    } catch (err: any) {
       this.throw(err);
     }
   }

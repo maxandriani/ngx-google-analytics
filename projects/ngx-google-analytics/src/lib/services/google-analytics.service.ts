@@ -43,7 +43,7 @@ export class GoogleAnalyticsService {
   gtag(...args: any[]) {
     try {
       this._gtag(...args.filter(x => x !== undefined));
-    } catch (err) {
+    } catch (err: any) {
       this.throw(err);
     }
   }
@@ -89,7 +89,7 @@ export class GoogleAnalyticsService {
       } else {
         this.gtag('event', action as string);
       }
-    } catch (error) {
+    } catch (error: any) {
       this.throw(error);
     }
   }
@@ -126,7 +126,7 @@ export class GoogleAnalyticsService {
           .map(([key, value]) => opt.set(key, value));
       }
       this.gtag('config', this.settings.trackingCode, this.toKeyValue(opt));
-    } catch (error) {
+    } catch (error: any) {
       this.throw(error);
     }
   }
@@ -161,7 +161,7 @@ export class GoogleAnalyticsService {
         opt.set('app_installer_id', installerId);
       }
       this.gtag('event', 'screen_view', this.toKeyValue(opt));
-    } catch (error) {
+    } catch (error: any) {
       this.throw(error);
     }
   }
@@ -181,7 +181,7 @@ export class GoogleAnalyticsService {
   set(...options: Array<any>) {
     try {
       this._gtag('set', ...options);
-    } catch (err) {
+    } catch (err: any) {
       this.throw(err);
     }
   }
@@ -214,7 +214,7 @@ export class GoogleAnalyticsService {
       } else {
         this.gtag('event', 'exception');
       }
-    } catch (error) {
+    } catch (error: any) {
       this.throw(error);
     }
   }

@@ -3,11 +3,12 @@ import { NGX_WINDOW } from './ngx-window-token';
 import { GtagFn } from '../types/gtag.type';
 import { DataLayer } from '../types/data-layer.type';
 import { NGX_DATA_LAYER } from './ngx-data-layer-token';
+import { GaWindow } from './ngx-google-analytics-window';
 
 /**
  * Check if there is some global function called gtag on Window object, or create an empty function to doesn't brake codes...
  */
-export function getGtagFn(window: Window, dataLayer: DataLayer): GtagFn {
+export function getGtagFn(window: GaWindow, dataLayer: DataLayer): GtagFn {
   return (window)
     ? window['gtag'] = window['gtag'] || function () {
         dataLayer.push(arguments as any);

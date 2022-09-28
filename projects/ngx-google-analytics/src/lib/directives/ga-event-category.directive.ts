@@ -9,6 +9,6 @@ export class GaEventCategoryDirective {
 
   constructor() { }
 
-  @Input() gaCategory: string;
+  @Input() gaCategory!: string;
 
 }

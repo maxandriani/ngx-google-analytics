@@ -41,7 +41,7 @@ export function GoogleAnalyticsRouterInitializer(
     const subs = router
       .events
       .pipe(
-        filter((event: NavigationEnd) => event instanceof NavigationEnd),
+        filter((event: any) => event instanceof NavigationEnd),
         skip(1), // Prevend double views on the first tigger (because GA Already send one ping on setup)
         filter(event => includeRules.length > 0
           ? includeRules.some(rule => rule.test(event.urlAfterRedirects))

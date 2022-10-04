@@ -22,3 +22,4 @@ export interface IGoogleAnalyticsSettings {
   nonce?: string;
 }
 
+export type IGoogleAnalyticsModuleSettings = Exclude<IGoogleAnalyticsSettings, 'trackingCode'>;

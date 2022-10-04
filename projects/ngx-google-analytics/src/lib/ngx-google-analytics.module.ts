@@ -1,11 +1,10 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
-import { IGoogleAnalyticsCommand } from './interfaces/i-google-analytics-command';
-import { NGX_GOOGLE_ANALYTICS_INITIALIZER_PROVIDER } from './initializers/google-analytics.initializer';
-import { NGX_GOOGLE_ANALYTICS_SETTINGS_TOKEN } from './tokens/ngx-google-analytics-settings-token';
-import { GaEventDirective } from './directives/ga-event.directive';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { GaEventCategoryDirective } from './directives/ga-event-category.directive';
 import { GaEventFormInputDirective } from './directives/ga-event-form-input.directive';
-import { IGoogleAnalyticsSettings } from './interfaces/i-google-analytics-settings';
+import { GaEventDirective } from './directives/ga-event.directive';
+import { NGX_GOOGLE_ANALYTICS_INITIALIZER_PROVIDER } from './initializers/google-analytics.initializer';
+import { IGoogleAnalyticsModuleSettings, IGoogleAnalyticsSettings } from './interfaces/i-google-analytics-settings';
+import { NGX_GOOGLE_ANALYTICS_SETTINGS_TOKEN } from './tokens/ngx-google-analytics-settings-token';
 
 /**
  * Install Google Analytics Tracking code on your environment and configure tracking ID.
@@ -33,12 +32,9 @@ export class NgxGoogleAnalyticsModule {
    * use the following injection code `@Inject(NGX_GOOGLE_ANALYTICS_SETTINGS_TOKEN) gaConfig: IGoogleAnalyticsSettings`
    *
    * @param trackingCode The Google Tracking Code
-   * @param initCommands When placed, it will run any GA Commands in sequence after setup GA environment.
-   * @param uri When placed, it will change the default js URI to the provided one.
-   * @param enableTracing When true, trace GA tracking errors on production mode.
-   * @param nonce When placed, nonce will be added to script tag.
+   * @param options Module options
    */
-  static forRoot(trackingCode: string, initCommands: IGoogleAnalyticsCommand[] = [], uri?: string, enableTracing?: boolean, nonce?: string): ModuleWithProviders<NgxGoogleAnalyticsModule> {
+  static forRoot(trackingCode: string, options?: IGoogleAnalyticsModuleSettings): ModuleWithProviders<NgxGoogleAnalyticsModule> {
     return {
       ngModule: NgxGoogleAnalyticsModule,
       providers: [
@@ -46,10 +42,7 @@ export class NgxGoogleAnalyticsModule {
           provide: NGX_GOOGLE_ANALYTICS_SETTINGS_TOKEN,
           useValue: {
             trackingCode,
-            initCommands,
-            uri,
-            enableTracing,
-            nonce
+            ...options
           } as IGoogleAnalyticsSettings
         },
         NGX_GOOGLE_ANALYTICS_INITIALIZER_PROVIDER,

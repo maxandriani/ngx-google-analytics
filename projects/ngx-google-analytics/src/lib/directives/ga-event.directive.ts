@@ -64,10 +64,12 @@ export class GaEventDirective implements OnDestroy {
       this.gaService
         .event(
           this.gaAction || this.gaEvent,
-          (this.gaCategoryDirective) ? this.gaCategoryDirective.gaCategory : undefined,
-          this.gaLabel || this.label,
-          this.gaValue,
-          this.gaInteraction
+          {
+            category: this.gaCategoryDirective?.gaCategory,
+            label: this.gaLabel || this.label,
+            value: this.gaValue,
+            interaction: this.gaInteraction
+          }
         );
     } catch (err: any) {
       this.throw(err);

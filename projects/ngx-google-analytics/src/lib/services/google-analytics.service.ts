@@ -2,7 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable, isDevMode } from '@angular/core';
 import { GaActionEnum } from '../enums/ga-action.enum';
 import { IGoogleAnalyticsSettings } from '../interfaces/i-google-analytics-settings';
-import { IGoogleAnalyticsServiceAppView } from '../interfaces/i-google-analytics-sevice';
+import { IGoogleAnalyticsServiceAppView, IGoogleAnalyticsServiceEvent, IGoogleAnalyticsServicePageView } from '../interfaces/i-google-analytics-sevice';
 import { NGX_GOOGLE_ANALYTICS_SETTINGS_TOKEN } from '../tokens/ngx-google-analytics-settings-token';
 import { NGX_GTAG_FN } from '../tokens/ngx-gtag-token';
 import { GtagFn } from '../types/gtag.type';
@@ -28,14 +28,9 @@ export class GoogleAnalyticsService {
     }
   }
 
-  /** @todo Change this to `Object.fromEntity()` in the future... */
-  private toKeyValue(map: Map<string, any>): { [param: string]: any } | void {
-    return (map.size > 0)
-      ? Array.from(map).reduce(
-        (obj, [key, value]) => Object.defineProperty(obj, key, { value, enumerable: true }),
-        {}
-      )
-      : undefined;
+  private toKeyValue(map: Map<string, any>): { [param: string]: any } | undefined {
+    if (map.size) // > 0
+      return Object.fromEntries(map);
   }
 
   /**
@@ -59,29 +54,26 @@ export class GoogleAnalyticsService {
    * ```
    *
    * @param action 'video_auto_play_start'
-   * @param category 'video_auto_play'
-   * @param label 'My promotional video'
-   * @param value A value to measure something
-   * @param interaction If user interaction is performed
+   * @param options event options (category, label, value, interaction, [custom dimensions] options)
    */
-  event(action: GaActionEnum | string, category?: string, label?: string, value?: number, interaction?: boolean, options?: Object) {
+  event(action: GaActionEnum | string, options?: IGoogleAnalyticsServiceEvent) {
     try {
       const opt = new Map<string, any>();
-      if (category) {
-        opt.set('event_category', category);
+      if (options.category !== undefined) {
+        opt.set('event_category', options.category);
       }
-      if (label) {
-        opt.set('event_label', label);
+      if (options.label !== undefined) {
+        opt.set('event_label', options.label);
       }
-      if (value) {
-        opt.set('value', value);
+      if (options.value !== undefined) {
+        opt.set('value', options.value);
       }
-      if (interaction !== undefined) {
-        opt.set('interaction', interaction);
+      if (options.interaction !== undefined) {
+        opt.set('interaction', options.interaction);
       }
-      if (options) {
+      if (options.options !== undefined) {
         Object
-          .entries(options)
+          .entries(options.options)
           .map(([key, value]) => opt.set(key, value));
       }
       const params = this.toKeyValue(opt);
@@ -108,22 +100,20 @@ export class GoogleAnalyticsService {
    * The tracking ID is injected automatically by Inject Token NGX_GOOGLE_ANALYTICS_SETTINGS_TOKEN
    *
    * @param path /home
-   * @param title Homepage
-   * @param location '{ page_location }'
-   * @param options '{ ... custom dimentions }'
+   * @param options pageView options (title, location, [custom dimensions] options)
    */
-  pageView(path: string, title?: string, location?: string, options?: Object) {
+  pageView(path: string, options?: IGoogleAnalyticsServicePageView) {
     try {
       const opt = new Map<string, any>([['page_path', path]]);
-      if (title) {
-        opt.set('page_title', title);
+      if (options.title !== undefined) {
+        opt.set('page_title', options.title);
       }
-      if (location || this.document) {
-        opt.set('page_location', (location || this.document.location.href));
+      if (options.location !== undefined || this.document) {
+        opt.set('page_location', (options.location || this.document.location.href));
       }
-      if (options) {
+      if (options.options !== undefined) {
         Object
-          .entries(options)
+          .entries(options.options)
           .map(([key, value]) => opt.set(key, value));
       }
       this.gtag('config', this.settings.trackingCode, this.toKeyValue(opt));
@@ -147,17 +137,17 @@ export class GoogleAnalyticsService {
    * @param appName 'app_name'
    * @param options appView options (appId, appVersion, installerId)
    */
-  appView(screen: string, appName: string, appId?: string, appVersion?: string, installerId?: string) {
+  appView(screen: string, appName: string, options?: IGoogleAnalyticsServiceAppView) {
     try {
       const opt = new Map<string, any>([['screen_name', screen], ['app_name', appName]]);
-      if (appId) {
-        opt.set('app_id', appId);
+      if (options.appId !== undefined) {
+        opt.set('app_id', options.appId);
       }
-      if (appVersion) {
-        opt.set('app_version', appVersion);
+      if (options.appVersion !== undefined) {
+        opt.set('app_version', options.appVersion);
       }
-      if (installerId) {
-        opt.set('app_installer_id', installerId);
+      if (options.installerId !== undefined) {
+        opt.set('app_installer_id', options.installerId);
       }
       this.gtag('event', 'screen_view', this.toKeyValue(opt));
     } catch (error: any) {
@@ -201,10 +191,10 @@ export class GoogleAnalyticsService {
   exception(description?: string, fatal?: boolean) {
     try {
       const opt = new Map<string, any>();
-      if (description) {
+      if (description !== undefined) {
         opt.set('description', description);
       }
-      if (fatal) {
+      if (fatal !== undefined) {
         opt.set('fatal', fatal);
       }
       const params = this.toKeyValue(opt);

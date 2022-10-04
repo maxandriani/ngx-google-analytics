@@ -1,6 +1,6 @@
 # Ngx Google Analytics
 
-An easy implementation to track ga on angular8+ apps.
+An easy implementation to track GA on Angular 8+ apps.
 
 Feedbacks on https://github.com/maxandriani/ngx-google-analytics
 
@@ -12,14 +12,21 @@ I'm investing a big amount of time studing new technologies for my daily job, an
 
 # Index
 
-* [Setup](#setup)
-  * [NPM](#npm)
-  * [Simple Setup](#simple-setup)
-  * [Routing Setup](#setup-routing-module)
-  * [Advanced Routing Setup](#advanced-setup-routing-module)
-* [GoogleAnalyticsService](#googleanalyticsservice)
-* [Directives](#directives)
-* [Changelog](CHANGELOG.md)
+- [Ngx Google Analytics](#ngx-google-analytics)
+- [Notice](#notice)
+- [Index](#index)
+	- [Setup](#setup)
+		- [NPM](#npm)
+		- [Simple Setup](#simple-setup)
+		- [Setup Routing Module](#setup-routing-module)
+		- [Advanced Setup Routing Module](#advanced-setup-routing-module)
+	- [GoogleAnalyticsService](#googleanalyticsservice)
+		- [Call Interface Events](#call-interface-events)
+		- [Call GA Page Views and Virtual Page Views](#call-ga-page-views-and-virtual-page-views)
+	- [Directives](#directives)
+		- [Simple directive use](#simple-directive-use)
+		- [Simple input use](#simple-input-use)
+		- [Grouped directives](#grouped-directives)
 
 ## Setup
 
@@ -33,7 +40,7 @@ npm install ngx-google-analytics
 
 ### Simple Setup
 
-On your Angular Project, you shall include the `NgxGoogleAnalyticsModule` on your highest level application module. ie `AddModule`. The easiest install mode call the `forRoot()` method and pass the GA tracking code.
+On your Angular Project, you shall include the `NgxGoogleAnalyticsModule` on your highest level application module. ie `AddModule`. The easiest install mode call the `forRoot()` method and pass the [GA tracking code](https://support.google.com/tagmanager/answer/12326985).
 
 ```ts
 import { NgxGoogleAnalyticsModule } from 'ngx-google-analytics';
@@ -44,7 +51,7 @@ import { NgxGoogleAnalyticsModule } from 'ngx-google-analytics';
   ],
   imports: [
     BrowserModule,
-    NgxGoogleAnalyticsModule.forRoot('traking-code')
+    NgxGoogleAnalyticsModule.forRoot('tracking-code')
   // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   ],
   providers: [],
@@ -80,6 +87,7 @@ export class AppModule {}
 ### Advanced Setup Routing Module
 
 You can customize some rules to include/exclude routes on `NgxGoogleAnalyticsRouterModule`. The include/exclude settings allow:
+
 * Simple route match: `{ include: [ '/full-uri-match' ] }`;
 * Wildcard route match: `{ include: [ '*/public/*' ] }`;
 * Regular Expression route match: `{ include: [ /^\/public\/.*/ ] }`;

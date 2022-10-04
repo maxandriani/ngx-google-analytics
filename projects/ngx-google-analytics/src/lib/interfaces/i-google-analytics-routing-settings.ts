@@ -1,5 +1,5 @@
 /**
- * Provide some custom settings for Automatics Router listener behaviour.
+ * Provide some custom settings for Automatic Router listener behaviour.
  */
 export interface IGoogleAnalyticsRoutingSettings {
   /**

@@ -1,18 +1,18 @@
-import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { NGX_GOOGLE_ANALYTICS_ROUTER_INITIALIZER_PROVIDER } from '../initializers/google-analytics-router.initializer';
-import { NgxGoogleAnalyticsModule } from '../ngx-google-analytics.module';
 import { IGoogleAnalyticsRoutingSettings } from '../interfaces/i-google-analytics-routing-settings';
+import { NgxGoogleAnalyticsModule } from '../ngx-google-analytics.module';
 import { NGX_GOOGLE_ANALYTICS_ROUTING_SETTINGS_TOKEN } from '../tokens/ngx-google-analytics-router-settings-token';
 
 /**
- * Attach a listener to `NavigationEnd` Router event. So, every time Router finish the page resolution it should call `NavigationEnd` event.
+ * Attach a listener to `NavigationEnd` Router event. Every time Router finishes the page resolution it should call the `NavigationEnd` event.
  * We assume that NavigationEnd is the final page resolution and call GA `page_view` command.
  *
  * To avoid double binds, we also destroy the subscription when de Bootstrap Component is destroied. But, we don't know for sure
  * that this strategy does not cause double bind on multiple bootstrap components.
  *
- * We are using de component's injector reference to resolve Router, sou I hope there is no problem w/ double bing.
+ * We are using the component's injector reference to resolve Router, so I hope there is no problem with double binding.
  *
  * If you have this problem, I encourage not Use NgxGoogleAnalyticsRouterModule and atach the listener on AppComponent initialization.
  *

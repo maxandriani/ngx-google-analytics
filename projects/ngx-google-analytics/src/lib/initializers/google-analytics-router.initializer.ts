@@ -1,9 +1,9 @@
-import { Provider, APP_BOOTSTRAP_LISTENER, ComponentRef } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { APP_BOOTSTRAP_LISTENER, ComponentRef, Provider } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter, skip } from 'rxjs/operators';
 import { IGoogleAnalyticsRoutingSettings } from '../interfaces/i-google-analytics-routing-settings';
 import { GoogleAnalyticsService } from '../services/google-analytics.service';
 import { NGX_GOOGLE_ANALYTICS_ROUTING_SETTINGS_TOKEN } from '../tokens/ngx-google-analytics-router-settings-token';
-import { filter, skip } from 'rxjs/operators';
 
 /**
  * Provide a DI Configuration to attach GA Trigger to Router Events at Angular Startup Cycle.
@@ -25,7 +25,7 @@ export const NGX_GOOGLE_ANALYTICS_ROUTER_INITIALIZER_PROVIDER: Provider = {
  * To avoid double binds, we also destroy the subscription when de Bootstrap Component is destroied. But, we don't know for sure
  * that this strategy does not cause double bind on multiple bootstrap components.
  *
- * We are using de component's injector reference to resolve Router, sou I hope there is no problem w/ double bing.
+ * We are using the component's injector reference to resolve Router, so I hope there is no problem with double binding.
  *
  * If you have this problem, I encourage not Use NgxGoogleAnalyticsRouterModule and atach the listener on AppComponent initialization.
  */

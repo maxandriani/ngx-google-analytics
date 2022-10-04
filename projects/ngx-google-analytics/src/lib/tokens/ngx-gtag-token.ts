@@ -1,18 +1,18 @@
-import { InjectionToken, inject } from '@angular/core';
-import { NGX_WINDOW } from './ngx-window-token';
-import { GtagFn } from '../types/gtag.type';
+import { inject, InjectionToken } from '@angular/core';
 import { DataLayer } from '../types/data-layer.type';
+import { GtagFn } from '../types/gtag.type';
 import { NGX_DATA_LAYER } from './ngx-data-layer-token';
 import { GaWindow } from './ngx-google-analytics-window';
+import { NGX_WINDOW } from './ngx-window-token';
 
 /**
- * Check if there is some global function called gtag on Window object, or create an empty function to doesn't brake codes...
+ * Check if there is some global function called gtag on Window object, or create an empty function that doesn't break code...
  */
 export function getGtagFn(window: GaWindow, dataLayer: DataLayer): GtagFn {
   return (window)
     ? window['gtag'] = window['gtag'] || function () {
-        dataLayer.push(arguments as any);
-      }
+      dataLayer.push(arguments as any);
+    }
     : null;
 }
 

@@ -28,7 +28,7 @@ import { IGoogleAnalyticsSettings } from './interfaces/i-google-analytics-settin
 })
 export class NgxGoogleAnalyticsModule {
   /**
-   * You should provide a valid Google TrackingCode. This code will be provided to the entire application by
+   * You should provide a valid GA Tracking Code. This code will be provided to the entire application by
    * `NGX_GOOGLE_ANALYTICS_SETTINGS_TOKEN` token. You can inject this code in you components if you like by
    * use the following injection code `@Inject(NGX_GOOGLE_ANALYTICS_SETTINGS_TOKEN) gaConfig: IGoogleAnalyticsSettings`
    *

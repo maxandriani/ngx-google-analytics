@@ -1,8 +1,9 @@
-import { Injectable, Inject, isDevMode } from '@angular/core';
-import { NGX_GOOGLE_ANALYTICS_SETTINGS_TOKEN } from '../tokens/ngx-google-analytics-settings-token';
-import { IGoogleAnalyticsSettings } from '../interfaces/i-google-analytics-settings';
-import { GaActionEnum } from '../enums/ga-action.enum';
 import { DOCUMENT } from '@angular/common';
+import { Inject, Injectable, isDevMode } from '@angular/core';
+import { GaActionEnum } from '../enums/ga-action.enum';
+import { IGoogleAnalyticsSettings } from '../interfaces/i-google-analytics-settings';
+import { IGoogleAnalyticsServiceAppView } from '../interfaces/i-google-analytics-sevice';
+import { NGX_GOOGLE_ANALYTICS_SETTINGS_TOKEN } from '../tokens/ngx-google-analytics-settings-token';
 import { NGX_GTAG_FN } from '../tokens/ngx-gtag-token';
 import { GtagFn } from '../types/gtag.type';
 
@@ -49,7 +50,7 @@ export class GoogleAnalyticsService {
   }
 
   /**
-   * Send an event trigger to GA. It is the same as call:
+   * Send an event trigger to GA. This is the same as:
    * ```js
    * gtag('event', 'video_auto_play_start', {
    *   'event_label': 'My promotional video',
@@ -60,7 +61,7 @@ export class GoogleAnalyticsService {
    * @param action 'video_auto_play_start'
    * @param category 'video_auto_play'
    * @param label 'My promotional video'
-   * @param value An value to measure something
+   * @param value A value to measure something
    * @param interaction If user interaction is performed
    */
   event(action: GaActionEnum | string, category?: string, label?: string, value?: number, interaction?: boolean, options?: Object) {
@@ -82,7 +83,7 @@ export class GoogleAnalyticsService {
         Object
           .entries(options)
           .map(([key, value]) => opt.set(key, value));
-      }      
+      }
       const params = this.toKeyValue(opt);
       if (params) {
         this.gtag('event', action as string, params);
@@ -95,7 +96,7 @@ export class GoogleAnalyticsService {
   }
 
   /**
-   * Send an page view event. This is the same as
+   * Send a page view event. This is the same as:
    *
    * ```js
    * gtag('config', 'GA_TRACKING_ID', {
@@ -111,7 +112,7 @@ export class GoogleAnalyticsService {
    * @param location '{ page_location }'
    * @param options '{ ... custom dimentions }'
    */
-  pageView( path: string, title?: string, location?: string, options?: Object) {
+  pageView(path: string, title?: string, location?: string, options?: Object) {
     try {
       const opt = new Map<string, any>([['page_path', path]]);
       if (title) {
@@ -132,7 +133,7 @@ export class GoogleAnalyticsService {
   }
 
   /**
-   * Send an event to report a App Page View. It is the same as
+   * Send an event to report a App Page View. This is the same as:
    *
    * ```js
    * gtag('event', 'screen_view', {
@@ -144,9 +145,7 @@ export class GoogleAnalyticsService {
    *
    * @param screen 'screen_name'
    * @param appName 'app_name'
-   * @param appId 'app_id'
-   * @param appVersion 'app_version'
-   * @param installerId 'app_installer_id'
+   * @param options appView options (appId, appVersion, installerId)
    */
   appView(screen: string, appName: string, appId?: string, appVersion?: string, installerId?: string) {
     try {
@@ -187,7 +186,7 @@ export class GoogleAnalyticsService {
   }
 
   /**
-   * Send an event to GA to report an application error. It is the same as
+   * Send an event to GA to report an application error. This is the same as:
    *
    * ```js
    * gtag('event', 'exception', {

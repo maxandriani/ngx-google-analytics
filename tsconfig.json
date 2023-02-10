@@ -10,7 +10,7 @@
     "module": "es2020",
     "moduleResolution": "node",
     "experimentalDecorators": true,
-    "target": "es2015",
+    "target": "ES2022",
     "typeRoots": [
       "node_modules/@types"
     ],
@@ -25,6 +25,7 @@
       "ngx-google-analytics/*": [
         "dist/ngx-google-analytics/*"
       ]
-    }
+    },
+    "useDefineForClassFields": false
   }
 }

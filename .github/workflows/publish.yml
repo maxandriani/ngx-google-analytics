@@ -15,8 +15,8 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 16
-      - name: 'Cache node Modules'
+          node-version: 18
+      - name: "Cache node Modules"
         uses: actions/cache@v1
         with:
           path: ~.npm
@@ -36,9 +36,9 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: 16
+          node-version: 18
           registry-url: https://registry.npmjs.org/
-      - name: 'Cache node Modules'
+      - name: "Cache node Modules"
         uses: actions/cache@v1
         with:
           path: ~.npm
@@ -65,7 +65,7 @@ jobs:
           cp CHANGELOG.md dist/ngx-google-analytics
       - run: npm pack
         working-directory: dist/ngx-google-analytics
-      - name: 'Upload Build Artifatc ${{ steps.get_version.outputs.VERSION }}'
+      - name: "Upload Build Artifatc ${{ steps.get_version.outputs.VERSION }}"
         uses: actions/upload-artifact@v2
         with:
           name: ${{ steps.get_version.outputs.VERSION }}.tgz
@@ -84,7 +84,7 @@ jobs:
           name: ${{ steps.get_version.outputs.VERSION }}.tgz
       - uses: actions/setup-node@v1
         with:
-          node-version: 16
+          node-version: 18
           registry-url: https://registry.npmjs.org/
       - run: npm publish ngx-google-analytics-${{ steps.get_version.outputs.VERSION }}.tgz
         env:
